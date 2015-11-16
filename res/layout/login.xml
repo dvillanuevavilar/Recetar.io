@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:weightSum="1">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="152dp" android:layout_gravity="center_horizontal" android:id="@+id/jaja">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView" android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" android:src="@drawable/ic_launcher"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <EditText
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/etCorreoL"
+                android:hint="@string/HintCorreo"
+                android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
+                android:inputType="textEmailAddress"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etPwdL"
+                android:layout_marginTop="25dp" android:hint="@string/HintPwd"
+                android:layout_below="@+id/etCorreoL" android:layout_alignStart="@+id/etCorreoL"
+                android:layout_alignEnd="@+id/etCorreoL" android:inputType="textPassword"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="101dp" android:layout_gravity="center_horizontal">
+        <Button
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="@string/BtnIniciar"
+                android:id="@+id/btIniciar"
+                android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp" android:layout_gravity="center_horizontal" android:id="@+id/jaja2">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TvRegistro"
+                android:id="@+id/tvRegistro"
+                android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</LinearLayout>

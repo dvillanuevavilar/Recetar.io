@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal">
+        <EditText
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/etNombreR"
+                android:hint="@string/HintNombre" android:layout_alignParentTop="true"
+                android:layout_marginTop="40dp"
+                android:layout_centerHorizontal="true"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/etCorreoR" android:layout_below="@+id/etNombreR"
+                android:hint="@string/HintCorreo"
+                android:layout_marginTop="25dp" android:layout_alignEnd="@+id/etNombreR"
+                android:layout_alignStart="@+id/etNombreR"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/etPwdR"
+                android:hint="@string/HintPwd"
+                android:layout_below="@+id/etCorreoR"
+                android:layout_marginTop="25dp" android:layout_alignStart="@+id/etPwdR2"
+                android:layout_alignEnd="@+id/etCorreoR"/>
+        <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/etPwdR2"
+                android:hint="@string/HintPwd" android:layout_below="@+id/etPwdR"
+                android:layout_alignLeft="@+id/etCorreoR" android:layout_marginTop="25dp"
+                android:layout_alignEnd="@+id/etCorreoR"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/BtnRegistrar"
+                android:id="@+id/btRegistrar" android:layout_below="@+id/etPwdR2"
+                android:layout_marginTop="50dp" android:layout_alignEnd="@+id/etPwdR2"
+                android:layout_alignStart="@+id/etPwdR2"/>
+    </RelativeLayout>
+</LinearLayout>
