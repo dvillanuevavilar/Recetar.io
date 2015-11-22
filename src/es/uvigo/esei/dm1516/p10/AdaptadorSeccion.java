@@ -10,9 +10,6 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
- * Created by Diego on 16/11/2015.
- */
 public class AdaptadorSeccion extends BaseExpandableListAdapter {
         private final SparseArray<GrupoDeItems> grupos;
         public LayoutInflater inflater;
