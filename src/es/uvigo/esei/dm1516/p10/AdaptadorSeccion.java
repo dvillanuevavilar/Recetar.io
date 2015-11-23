@@ -1,6 +1,7 @@
 package es.uvigo.esei.dm1516.p10;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,8 +47,8 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         TextView tvTitulo = (TextView) convertView.findViewById(R.id.tvTituloSubItem);
         TextView tvTiempo = (TextView) convertView.findViewById(R.id.tvTiempoSubitems);
         TextView tvDificultad = (TextView) convertView.findViewById(R.id.tvDificultadSubitems);
-        TextView tvNumComensales = (TextView) convertView.findViewById(R.id.tvNumComensales);
-        TextView tvAutor = (TextView) convertView.findViewById(R.id.tvAutor);
+        TextView tvNumComensales = (TextView) convertView.findViewById(R.id.tvNumComensalesSubItems);
+        TextView tvAutor = (TextView) convertView.findViewById(R.id.tvAutorSuItems);
 
         tvTitulo.setText(children.getTitulo());
         tvTiempo.setText(String.valueOf(children.getTiempo()));
@@ -59,6 +60,15 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
                 Toast.makeText(activity, "Seleccionado id "+ children.getIdReceta(), Toast.LENGTH_SHORT).show();
+                Intent intentVerReceta = new Intent("intent.action.VIEWRECETA");
+                intentVerReceta.putExtra("titulo", children.getTitulo());
+                intentVerReceta.putExtra("tiempo", String.valueOf(children.getTiempo()));
+                intentVerReceta.putExtra("numComensales", String.valueOf(children.getNumComensales()));
+                intentVerReceta.putExtra("dificultad", children.getDificultad());
+                intentVerReceta.putExtra("autor", children.getAutor());
+                intentVerReceta.putExtra("ingredientes", children.getIngredientes());
+                intentVerReceta.putExtra("elaboracion", children.getElaboracion());
+                activity.startActivity(intentVerReceta);
             }
         });
         return convertView;

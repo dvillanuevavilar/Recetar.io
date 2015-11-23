@@ -60,14 +60,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/comensales"
                 android:id="@+id/textView10"
-                android:layout_alignTop="@+id/tvNumComensales"
-                android:layout_toStartOf="@+id/tvNumComensales"/>
+                android:layout_alignBottom="@+id/tvNumComensalesSubItems"
+                android:layout_toStartOf="@+id/tvNumComensalesSubItems"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:id="@+id/tvNumComensales"
+                android:id="@+id/tvNumComensalesSubItems"
                 android:layout_marginLeft="5dp"
                 android:layout_alignTop="@+id/tvTiempoSubitems"
                 android:layout_alignParentEnd="true"
@@ -78,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/autor"
                 android:id="@+id/textView11"
+                android:layout_alignBaseline="@+id/tvDificultadSubitems"
                 android:layout_alignBottom="@+id/tvDificultadSubitems"
                 android:layout_alignStart="@+id/textView10"/>
 
@@ -85,9 +86,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="author"
-                android:id="@+id/tvAutor"
+                android:id="@+id/tvAutorSuItems"
+                android:layout_marginLeft="5dp"
+                android:layout_alignBaseline="@+id/textView11"
                 android:layout_alignBottom="@+id/textView11"
-                android:layout_toEndOf="@+id/textView11"
-                android:layout_marginLeft="5dp"/>
+                android:layout_toEndOf="@+id/textView11"/>
     </RelativeLayout>
 </LinearLayout>

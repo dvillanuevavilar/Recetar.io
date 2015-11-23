@@ -13,7 +13,7 @@ public class Receta {
     private String autor;
     private String seccion;
 
-        public Receta(String idReceta, String titulo, int tiempo, String dificultad, int numComensales, String ingredientes, String elaboracion, String autor, String seccion) {
+    public Receta(String idReceta, String titulo, int tiempo, String dificultad, int numComensales, String ingredientes, String elaboracion, String autor, String seccion) {
         this.idReceta = idReceta;
         this.titulo = titulo;
         this.tiempo = tiempo;

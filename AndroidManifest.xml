@@ -3,23 +3,38 @@
           package="es.uvigo.esei.dm1516.p10"
           android:versionCode="1"
           android:versionName="1.0">
+
     <uses-sdk android:minSdkVersion="21"/>
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
-        <activity android:name="Main"
-                  android:label="@string/app_name">
+    <application
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher">
+        <activity
+            android:name="Main"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Login"
-                  android:label="@string/app_Login">
+        <activity
+            android:name=".Login"
+            android:label="@string/app_Login">
         </activity>
-        <activity android:name=".Registro"
-                  android:label="@string/app_Registro">
+        <activity
+            android:name=".Registro"
+            android:label="@string/app_Registro">
         </activity>
-        <activity android:name=".CrearReceta"
-                  android:label="@string/app_CrearReceta">
+        <activity
+            android:name=".CrearReceta"
+            android:label="@string/app_CrearReceta">
+        </activity>
+        <activity
+            android:name=".VerReceta"
+            android:label="@string/app_VerReceta">
+            <intent-filter>
+                <action android:name="intent.action.VIEWRECETA"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
     </application>
 </manifest>

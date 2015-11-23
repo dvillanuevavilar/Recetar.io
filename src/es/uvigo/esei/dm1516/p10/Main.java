@@ -44,6 +44,7 @@ public class Main extends Activity {
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
 
+        Intent intentVerReceta = new Intent(Main.this, VerReceta.class);
         Intent intentLogin = new Intent(Main.this, Login.class);
         Main.this.startActivity(intentLogin);
 
