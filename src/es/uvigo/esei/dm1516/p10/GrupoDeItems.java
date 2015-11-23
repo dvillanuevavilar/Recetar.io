@@ -1,5 +1,7 @@
 package es.uvigo.esei.dm1516.p10;
 
+import es.uvigo.esei.dm1516.p10.Model.Receta;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.w3c.dom.Text;
+import es.uvigo.esei.dm1516.p10.Model.Receta;
 
 public class AdaptadorSeccion extends BaseExpandableListAdapter {
     private final SparseArray<GrupoDeItems> grupos;

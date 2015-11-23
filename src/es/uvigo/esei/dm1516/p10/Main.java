@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.widget.*;
+import es.uvigo.esei.dm1516.p10.Model.Receta;
+import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
 public class Main extends Activity {
     private SparseArray<GrupoDeItems> secciones = new SparseArray<GrupoDeItems>();
@@ -63,7 +64,6 @@ public class Main extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-
             case R.id.mainMenuItemOpt1:
                 break;
             case R.id.mainMenuItemOpt2:

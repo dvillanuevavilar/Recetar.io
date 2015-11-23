@@ -1,4 +1,4 @@
-package es.uvigo.esei.dm1516.p10;
+package es.uvigo.esei.dm1516.p10.Model;
 
 public class Usuario {
     private String email;
