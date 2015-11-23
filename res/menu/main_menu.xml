@@ -2,6 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/mainMenuItemOpt1" android:title="@string/favoritos"></item>
     <item android:id="@+id/mainMenuItemOpt2" android:title="@string/cerrar_sesion"></item>
-    <item android:id="@+id/mainMenuItemOpt4" android:title="@string/crearreceta"></item>
-    <item android:id="@+id/mainMenuItemOpt5" android:title="Ver Receta"></item>
+    <item android:id="@+id/mainMenuItemOpt3" android:title="@string/crearreceta"></item>
+    <item android:id="@+id/mainMenuItemOpt4" android:title="Ver Receta"></item>
 </menu>

@@ -70,6 +70,10 @@ public class Main extends Activity {
                 Intent intentLogin = new Intent(Main.this, Login.class);
                 Main.this.startActivity(intentLogin);
                 break;
+            case R.id.mainMenuItemOpt3:
+                Intent intentCrearReceta = new Intent(Main.this, CrearReceta.class);
+                Main.this.startActivity(intentCrearReceta);
+                break;
         }
         return true;
     }

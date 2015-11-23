@@ -26,9 +26,28 @@
             android:id="@+id/etTitulo"
             android:hint="@string/HintTitulo"
             android:layout_marginTop="21dp"
-            android:layout_marginStart="23dp"
             android:layout_below="@+id/textView9"
-            android:layout_alignParentStart="true"
+            android:layout_alignStart="@+id/etSeccion"/>
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etSeccion"
+            android:hint="@string/HintSeccion"
+            android:layout_below="@+id/etTitulo"
+            android:layout_centerHorizontal="true"/>
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etDificultad"
+            android:hint="@string/dificultad"
+            android:layout_below="@+id/etSeccion"
+            android:layout_alignStart="@+id/etSeccion"
             />
 
         <EditText
@@ -36,74 +55,48 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText"
-            android:hint="@string/HintSeccion"
-            android:layout_below="@+id/etTitulo"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"/>
-
-        <EditText
-            android:layout_width="340dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editText2"
-            android:hint="@string/dificultad"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/editText"
-            android:layout_alignStart="@+id/editText"/>
-
-        <EditText
-            android:layout_width="340dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/editText3"
+            android:id="@+id/etTiempo"
             android:hint="@string/tiempo"
-            android:layout_centerVertical="true"
-            android:layout_alignStart="@+id/etTitulo"
-            android:layout_marginTop="20dp"/>
+            android:layout_below="@+id/etDificultad"
+            android:layout_alignStart="@+id/etDificultad"/>
 
         <EditText
             android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText4"
+            android:id="@+id/etNumComensales"
             android:hint="@string/comensales"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/editText3"
-            android:layout_alignStart="@+id/editText2"/>
+            android:layout_below="@+id/etTiempo"
+            android:layout_alignStart="@+id/etTiempo"/>
 
         <EditText
             android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText5"
+            android:id="@+id/etIngredientes"
             android:hint="@string/ingredientes"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/editText4"
-            android:layout_alignStart="@+id/editText4"/>
+            android:layout_below="@+id/etNumComensales"
+            android:layout_alignStart="@+id/etNumComensales"/>
 
         <EditText
             android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText6"
+            android:id="@+id/etElaboracion"
             android:hint="@string/elaboracion"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/editText5"
-            android:layout_alignStart="@+id/editText3"/>
+            android:layout_below="@+id/etIngredientes"
+            android:layout_alignStart="@+id/etIngredientes"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Guardar"
-            android:id="@+id/btCrear"
+            android:id="@+id/btGuardar"
             android:layout_alignParentBottom="true"
-            android:layout_alignEnd="@+id/editText6"
+            android:layout_alignEnd="@+id/etElaboracion"
             android:layout_marginTop="25dp"/>
 
     </RelativeLayout>

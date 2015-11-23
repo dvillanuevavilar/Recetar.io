@@ -9,6 +9,7 @@
     <string name="TvRegistro">Registrarse</string>
     <string name="app_Registro">Registro de usuario</string>
     <string name="app_Login">Login</string>
+    <string name="app_CrearReceta">Nueva receta</string>
     <string name="favoritos">Favoritos</string>
     <string name="cerrar_sesion">Cerrar sesión</string>
     <string name="min">min</string>
