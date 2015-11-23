@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Recetar.io</string>
@@ -16,19 +15,3 @@
     <string name="ingredientes">Ingredientes</string>
     <string name="elaboracion">Elaboración</string>
 </resources>
-=======
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Recetar.io</string>
-    <string name="HintNombre">Nombre</string>
-    <string name="HintCorreo">Correo electronico</string>
-    <string name="HintPwd">Contraseña</string>
-    <string name="BtnIniciar">Iniciar sesion</string>
-    <string name="BtnRegistrar">Registrar</string>
-    <string name="TvRegistro">Registrarse</string>
-    <string name="app_Registro">Registro de usuario</string>
-    <string name="app_Login">Login</string>
-    <string name="favoritos">Favoritos</string>
-    <string name="cerrar_sesion">Cerrar sesión</string>
-</resources>
->>>>>>> 3c595e1cbe9c3262dddcdcefd7175141963b0555
