@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckedTextView;
 import android.widget.TextView;
 import android.widget.Toast;
-import org.w3c.dom.Text;
 
 public class AdaptadorSeccion extends BaseExpandableListAdapter {
     private final SparseArray<GrupoDeItems> grupos;
@@ -21,6 +19,41 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         activity = act;
         this.grupos = grupos;
         inflater = act.getLayoutInflater();
+    }
+
+    //Obtenemos el layout para los ítems
+    @Override
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.items, parent, false);
+        }
+        GrupoDeItems grupo = (GrupoDeItems) getGroup(groupPosition);
+        TextView tvSeccion = (TextView) convertView.findViewById(R.id.tvTituloSubitem);
+        TextView tvCountRecetas = (TextView) convertView.findViewById(R.id.tvCountRecetas);
+
+        tvSeccion.setText(grupo.getNombreGrupo());
+        tvCountRecetas.setText(String.valueOf(grupo.getCountRecetas()));
+        return convertView;
+    }
+
+    // En base a la posición del item y de subitem nos devuelve
+    // el objeto view correspondiente y el layout para los subitems
+    @Override
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        final String children = (String) getChild(groupPosition, childPosition);
+        TextView textvw = null;
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.subitems, null);
+        }
+        textvw = (TextView) convertView.findViewById(R.id.tvTituloSubitem);
+        textvw.setText(children);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(activity, children, Toast.LENGTH_SHORT).show();
+            }
+        });
+        return convertView;
     }
 
     // Nos devuelve los datos asociados a un subitem en base
@@ -35,26 +68,6 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return 0;
-    }
-
-    // En base a la posición del item y de subitem nos devuelve
-    // el objeto view correspondiente y el layout para los subitems
-    @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String children = (String) getChild(groupPosition, childPosition);
-        TextView textvw = null;
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.subitems, null);
-        }
-        textvw = (TextView) convertView.findViewById(R.id.tvSeccion);
-        textvw.setText(children);
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(activity, children, Toast.LENGTH_SHORT).show();
-            }
-        });
-        return convertView;
     }
 
     // Nos devuelve la cantidad de subitems que tiene un ítem
@@ -91,21 +104,6 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
     @Override
     public long getGroupId(int groupPosition) {
         return 0;
-    }
-
-    //Obtenemos el layout para los ítems
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.items, parent, false);
-        }
-        GrupoDeItems grupo = (GrupoDeItems) getGroup(groupPosition);
-        TextView tvSeccion = (TextView) convertView.findViewById(R.id.tvSeccion);
-        TextView tvCountRecetas = (TextView) convertView.findViewById(R.id.tvCountRecetas);
-
-        tvSeccion.setText(grupo.getNombreGrupo());
-        tvCountRecetas.setText(String.valueOf(grupo.getCountRecetas()));
-        return convertView;
     }
 
     @Override

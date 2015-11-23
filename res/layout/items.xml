@@ -7,23 +7,32 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" android:gravity="center_vertical" android:padding="10dp">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Seccion"
                 android:gravity="left"
                 android:paddingLeft="32dp"
-                android:paddingTop="8dp"
-                android:textSize="14sp"
-                android:textStyle="bold" android:paddingBottom="32dp"
-                android:id="@+id/tvSeccion" android:layout_weight="0.5"/>
+                android:textStyle="bold"
+                android:id="@+id/tvTituloSubitem"
+                />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="("
+                android:id="@+id/textView"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:id="@+id/tvCountRecetas"
-                android:layout_weight="0.5"/>
+                />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"
+                android:id="@+id/textView4"/>
     </LinearLayout>
 </LinearLayout>
 

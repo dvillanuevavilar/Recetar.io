@@ -13,10 +13,6 @@ public class Main extends Activity {
     private SparseArray<GrupoDeItems> secciones = new SparseArray<GrupoDeItems>();
 
     public void crearDatos() {
-        GrupoDeItems grupo0 = new GrupoDeItems("Postres");
-        grupo0.children.add("Tarta de fresa");
-        grupo0.children.add("Bizcocho");
-        secciones.append(0, grupo0);
         GrupoDeItems grupo1 = new GrupoDeItems("Primeros");
         grupo1.children.add("Sopa");
         grupo1.children.add("Caldo");
@@ -27,6 +23,10 @@ public class Main extends Activity {
         grupo2.children.add("Pollo, morrones y aceitunas");
         grupo2.children.add("Carlitos");
         secciones.append(2, grupo2);
+        GrupoDeItems grupo0 = new GrupoDeItems("Postres");
+        grupo0.children.add("Tarta de fresa");
+        grupo0.children.add("Bizcocho");
+        secciones.append(0, grupo0);
     }
 
     @Override
@@ -41,20 +41,20 @@ public class Main extends Activity {
         crearDatos();
 
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
-        AdaptadorSeccion adapter = new AdaptadorSeccion(this,secciones);
+        AdaptadorSeccion adapter = new AdaptadorSeccion(this, secciones);
         lista.setAdapter(adapter);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         this.getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem menuItem){
-        switch (menuItem.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
 
             case R.id.mainMenuItemOpt1:
                 break;
