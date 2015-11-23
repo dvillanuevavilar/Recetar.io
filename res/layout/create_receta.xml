@@ -6,81 +6,105 @@
 
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:id="@+id/rl1">
+            android:layout_height="fill_parent" android:id="@+id/rl2">
+
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Titulo"
-                android:id="@+id/textView5"
-                android:layout_alignParentTop="true" android:layout_alignParentStart="true"
-                android:layout_marginStart="40dp" android:layout_marginTop="37dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/crearreceta"
+            android:id="@+id/textView9"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/etTitulo"
+            android:layout_marginTop="22dp"/>
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/etTitulo"
+            android:hint="@string/HintTitulo"
+            android:layout_marginTop="21dp"
+            android:layout_marginStart="23dp"
+            android:layout_below="@+id/textView9"
+            android:layout_alignParentStart="true"
+            />
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:hint="@string/HintSeccion"
+            android:layout_below="@+id/etTitulo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText2"
+            android:hint="@string/dificultad"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/editText"
+            android:layout_alignStart="@+id/editText"/>
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText3"
+            android:hint="@string/tiempo"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@+id/etTitulo"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText4"
+            android:hint="@string/comensales"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/editText3"
+            android:layout_alignStart="@+id/editText2"/>
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText5"
+            android:hint="@string/ingredientes"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/editText4"
+            android:layout_alignStart="@+id/editText4"/>
+
+        <EditText
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editText6"
+            android:hint="@string/elaboracion"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/editText5"
+            android:layout_alignStart="@+id/editText3"/>
+
         <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fav"
-                android:id="@+id/button"
-                android:layout_above="@+id/tvTiempo" android:layout_alignStart="@+id/tvDificultad"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tiempo"
-                android:id="@+id/tvTiempo"
-                android:layout_marginTop="48dp" android:layout_below="@+id/textView5"
-                android:layout_alignStart="@+id/textView5"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/min"
-                android:id="@+id/textView7" android:layout_alignBottom="@+id/tvTiempo"
-                android:layout_toEndOf="@+id/tvTiempo"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Comensales"
-                android:id="@+id/tvComensales"
-                android:layout_marginTop="24dp"
-                android:layout_below="@+id/tvTiempo" android:layout_alignStart="@+id/tvTiempo"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvDificultad" android:layout_above="@+id/tvComensales"
-                android:layout_alignParentEnd="true" android:layout_marginEnd="61dp" android:text="Dificultad"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Autor"
-                android:id="@+id/tvAutor" android:layout_alignBottom="@+id/tvComensales"
-                android:layout_alignStart="@+id/tvDificultad"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ingredientes"
-                android:id="@+id/textView6"
-                android:layout_marginTop="43dp" android:layout_below="@+id/tvComensales"
-                android:layout_alignStart="@+id/tvComensales"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:text="Texto de ingredientes"
-                android:id="@+id/tvIngredientes"
-                android:layout_centerVertical="true" android:layout_alignStart="@+id/textView6"
-                android:layout_alignEnd="@+id/button"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/elaboracion"
-                android:id="@+id/textView8"
-                android:layout_below="@+id/tvIngredientes" android:layout_alignStart="@+id/tvIngredientes"/>
-        <TextView android:layout_width="wrap_content" android:layout_height="60dp" android:text="Texto de ingredientes"
-                  android:id="@+id/tvElaboracion"
-                  android:layout_below="@+id/textView8" android:layout_alignStart="@+id/textView8"
-                  android:layout_alignEnd="@+id/tvDificultad"/>
-        <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView2"
-                android:src="@drawable/ic_launcher"
-                android:layout_below="@+id/tvElaboracion" android:layout_centerHorizontal="true"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar"
+            android:id="@+id/btCrear"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/editText6"
+            android:layout_marginTop="25dp"/>
+
     </RelativeLayout>
 </LinearLayout>

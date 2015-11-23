@@ -2,13 +2,10 @@ package es.uvigo.esei.dm1516.p10;
 
 import android.text.format.Time;
 
-/**
- * Created by diego on 23/11/15.
- */
 public class Receta {
     private String idReceta;
     private String titulo;
-    private Time tiempo;
+    private int tiempo;
     private String dificultad;
     private int numComensales;
     private String ingredientes;
@@ -16,11 +13,7 @@ public class Receta {
     private String autor;
     private String seccion;
 
-
-    public Receta() {
-    }
-
-    public Receta(String idReceta, String titulo, Time tiempo, String dificultad, int numComensales, String ingredientes, String elaboracion, String autor, String seccion) {
+    public Receta(String idReceta, String titulo, int tiempo, String dificultad, int numComensales, String ingredientes, String elaboracion, String autor, String seccion) {
         this.idReceta = idReceta;
         this.titulo = titulo;
         this.tiempo = tiempo;
@@ -48,11 +41,11 @@ public class Receta {
         this.titulo = titulo;
     }
 
-    public Time getTiempo() {
+    public int getTiempo() {
         return tiempo;
     }
 
-    public void setTiempo(Time tiempo) {
+    public void setTiempo(int tiempo) {
         this.tiempo = tiempo;
     }
 

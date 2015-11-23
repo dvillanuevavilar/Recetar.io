@@ -14,4 +14,10 @@
     <string name="min">min</string>
     <string name="ingredientes">Ingredientes</string>
     <string name="elaboracion">Elaboración</string>
+    <string name="crearreceta">Nueva receta</string>
+    <string name="HintTitulo">Titulo</string>
+    <string name="HintSeccion">Sección</string>
+    <string name="dificultad">Dificultad</string>
+    <string name="tiempo">Tiempo</string>
+    <string name="comensales">Número de comensales</string>
 </resources>
