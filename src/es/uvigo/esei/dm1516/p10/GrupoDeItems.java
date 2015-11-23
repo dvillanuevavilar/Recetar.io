@@ -6,7 +6,7 @@ import java.util.List;
 public class GrupoDeItems {
     private String nombreGrupo;
     private int countRecetas;
-    public final List<String> children = new ArrayList<String>();
+    private final List<Receta> children = new ArrayList<Receta>();
 
     public GrupoDeItems(String nombreGrupo) {
         this.nombreGrupo = nombreGrupo;
@@ -17,6 +17,18 @@ public class GrupoDeItems {
     }
 
     public Integer getCountRecetas(){
+        return children.size();
+    }
+
+    public void add(Receta rec){
+        children.add(rec);
+    }
+
+    public Object get(int pos){
+        return children.get(pos);
+    }
+
+    public int size(){
         return children.size();
     }
 }

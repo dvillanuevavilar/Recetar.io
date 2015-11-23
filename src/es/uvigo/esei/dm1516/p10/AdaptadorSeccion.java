@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import org.w3c.dom.Text;
 
 public class AdaptadorSeccion extends BaseExpandableListAdapter {
     private final SparseArray<GrupoDeItems> grupos;
@@ -21,14 +22,13 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         inflater = act.getLayoutInflater();
     }
 
-    //Obtenemos el layout para los ítems
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.items, parent, false);
         }
         GrupoDeItems grupo = (GrupoDeItems) getGroup(groupPosition);
-        TextView tvSeccion = (TextView) convertView.findViewById(R.id.tvTituloSubitem);
+        TextView tvSeccion = (TextView) convertView.findViewById(R.id.tvTituloItem);
         TextView tvCountRecetas = (TextView) convertView.findViewById(R.id.tvCountRecetas);
 
         tvSeccion.setText(grupo.getNombreGrupo());
@@ -36,21 +36,29 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    // En base a la posición del item y de subitem nos devuelve
-    // el objeto view correspondiente y el layout para los subitems
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        final String children = (String) getChild(groupPosition, childPosition);
-        TextView textvw = null;
+        final Receta children = (Receta) getChild(groupPosition, childPosition);
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.subitems, null);
+            convertView = inflater.inflate(R.layout.subitems, parent, false);
         }
-        textvw = (TextView) convertView.findViewById(R.id.tvTituloSubitem);
-        textvw.setText(children);
+
+        TextView tvTitulo = (TextView) convertView.findViewById(R.id.tvTituloSubItem);
+        TextView tvTiempo = (TextView) convertView.findViewById(R.id.tvTiempoSubitems);
+        TextView tvDificultad = (TextView) convertView.findViewById(R.id.tvDificultadSubitems);
+        TextView tvNumComensales = (TextView) convertView.findViewById(R.id.tvNumComensales);
+        TextView tvAutor = (TextView) convertView.findViewById(R.id.tvAutor);
+
+        tvTitulo.setText(children.getTitulo());
+        tvTiempo.setText(String.valueOf(children.getTiempo()));
+        tvDificultad.setText(children.getDificultad());
+        tvNumComensales.setText(String.valueOf(children.getNumComensales()));
+        tvAutor.setText(children.getAutor());
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, children, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Seleccionado id "+ children.getIdReceta(), Toast.LENGTH_SHORT).show();
             }
         });
         return convertView;
@@ -60,7 +68,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
     // a la posición
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return grupos.get(groupPosition).children.get(childPosition);
+        return grupos.get(groupPosition).get(childPosition);
     }
 
     // Devuelve el id de un item o subitem en base a la
@@ -73,7 +81,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
     // Nos devuelve la cantidad de subitems que tiene un ítem
     @Override
     public int getChildrenCount(int groupPosition) {
-        return grupos.get(groupPosition).children.size();
+        return grupos.get(groupPosition).size();
     }
 
     //Los datos de un ítem especificado por groupPosition

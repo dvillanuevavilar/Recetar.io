@@ -13,20 +13,28 @@ public class Main extends Activity {
     private SparseArray<GrupoDeItems> secciones = new SparseArray<GrupoDeItems>();
 
     public void crearDatos() {
-        GrupoDeItems grupo1 = new GrupoDeItems("Primeros");
-        grupo1.children.add("Sopa");
-        grupo1.children.add("Caldo");
-        grupo1.children.add("Ensaladilla");
-        secciones.append(1, grupo1);
-        GrupoDeItems grupo2 = new GrupoDeItems("Segundos");
-        grupo2.children.add("Jamon, queso y anana");
-        grupo2.children.add("Pollo, morrones y aceitunas");
-        grupo2.children.add("Carlitos");
-        secciones.append(2, grupo2);
-        GrupoDeItems grupo0 = new GrupoDeItems("Postres");
-        grupo0.children.add("Tarta de fresa");
-        grupo0.children.add("Bizcocho");
-        secciones.append(0, grupo0);
+        Receta rc1 = new Receta("1", "Tortilla francesa", 5, "Facil", 2, "Huevos", "Batir y freir", "Juan", "Primer plato");
+        Receta rc2 = new Receta("2", "Tortilla española", 6, "Facil", 2, "Huevos y patatas", "Batir, pelar y freir", "Rosa", "Primer plato");
+        Receta rc3 = new Receta("3", "Carne asada", 3, "Media", 5, "Carne", "Asar la carne", "Juan", "Segundo plato");
+        Receta rc4 = new Receta("4", "Pollo asado", 2, "Media", 4, "Pollo", "Asar el pollo", "Rosa", "Segundo plato");
+        Receta rc5 = new Receta("5", "Tarta de queso", 1, "Dificil", 2, "Queso y tarta", "Abrir la nevera", "Rosa", "Postre");
+        Receta rc6 = new Receta("6", "Tarta helada", 3, "Dificil", 3, "Tarta y hielo", "Abrir el congelador", "Juan", "Postre");
+
+        GrupoDeItems primeros = new GrupoDeItems("Primer Plato");
+        primeros.add(rc1);
+        primeros.add(rc2);
+        secciones.append(0, primeros);
+        GrupoDeItems segundos = new GrupoDeItems("Segundo Plato");
+        segundos.add(rc3);
+        segundos.add(rc4);
+        secciones.append(1, segundos);
+        GrupoDeItems postres = new GrupoDeItems("Postre");
+        postres.add(rc5);
+        postres.add(rc6);
+        secciones.append(2, postres);
+
+        Usuario usr1 = new Usuario("juan@receta.es", "Juan Rodríguez", "abc123.");
+        Usuario usr2 = new Usuario("rosa@receta.es", "Rosa Lois", "abc123.");
     }
 
     @Override
