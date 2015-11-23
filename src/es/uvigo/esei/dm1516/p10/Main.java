@@ -10,7 +10,7 @@ import android.view.Window;
 import android.widget.*;
 
 public class Main extends Activity {
-    SparseArray<GrupoDeItems> secciones = new SparseArray<GrupoDeItems>();
+    private SparseArray<GrupoDeItems> secciones = new SparseArray<GrupoDeItems>();
 
     public void crearDatos() {
         GrupoDeItems grupo0 = new GrupoDeItems("Postres");

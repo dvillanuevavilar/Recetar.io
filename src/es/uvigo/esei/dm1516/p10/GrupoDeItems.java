@@ -4,9 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GrupoDeItems {
-    public String string;
+    private String nombreGrupo;
+    private int countRecetas;
     public final List<String> children = new ArrayList<String>();
-    public GrupoDeItems(String string) {
-        this.string = string;
+
+    public GrupoDeItems(String nombreGrupo) {
+        this.nombreGrupo = nombreGrupo;
+    }
+
+    public String getNombreGrupo(){
+        return nombreGrupo;
+    }
+
+    public Integer getCountRecetas(){
+        return children.size();
     }
 }
