@@ -109,6 +109,20 @@ public class SqlIO extends SQLiteOpenHelper {
         return lista;
     }
 
+    public ArrayList<Receta> listarRecetasFavoritas(String email) {
+        ArrayList<Receta> lista = new ArrayList<>();
+        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT * FROM receta R, favoritas F where F.usuario_email=? and F.receta_idReceta=R.idReceta",
+                new String[]{email});
+        if (cursor.moveToFirst()) {
+            do {
+                lista.add(new Receta(cursor.getString(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3),
+                        cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8)));
+            } while (cursor.moveToNext());
+        }
+
+        return lista;
+    }
+
     public Receta recetaPorId(String id) {
         Receta receta = null;
         SQLiteDatabase db = this.getReadableDatabase();

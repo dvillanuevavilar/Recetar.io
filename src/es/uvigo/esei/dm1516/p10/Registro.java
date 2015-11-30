@@ -5,8 +5,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import es.uvigo.esei.dm1516.p10.Core.App;
+import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
 public class Registro extends Activity {
+
+    public boolean registrarUsuario(Usuario user) {
+
+        if (!((App) this.getApplication()).getDb().existeUsuario(user.getEmail())) {
+            ((App) this.getApplication()).getDb().insertarUsuario(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         Registro.this.setContentView(R.layout.register);
@@ -20,8 +34,26 @@ public class Registro extends Activity {
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Se comprobaran los datos y se enviarán a la base de datos luego se finaliza la actividad para volver a la principal
-                Registro.this.finish();
+
+                if (etPass.getText().toString().equals(etPass2.getText().toString())) {
+                    if (etPass.getText().toString().length() < 5) {
+                        Toast.makeText(getApplicationContext(), "La contrase\u00f1a debe tener una longitud superior a 4 caracteres", Toast.LENGTH_SHORT).show();
+                    } else if (!Usuario.validateEmail(etCorreo.getText().toString())) {
+                        Toast.makeText(getApplicationContext(), "El campo email no es correcto", Toast.LENGTH_SHORT).show();
+                    } else if (etNombre.getText().toString().length() < 1) {
+                        Toast.makeText(getApplicationContext(), "El campo nombre no puede estar vac\u00edo", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Usuario usuario = new Usuario(etCorreo.getText().toString(), etNombre.getText().toString(), etPass.getText().toString());
+                        if (Registro.this.registrarUsuario(usuario)) {
+                            Toast.makeText(getApplicationContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
+                            Registro.this.finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Ya existe un usuario con ese email", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Las contrase\u00f1as no coinciden", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
