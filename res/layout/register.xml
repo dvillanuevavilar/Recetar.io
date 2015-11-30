@@ -42,7 +42,7 @@
                 android:id="@+id/etPwdR2"
                 android:hint="@string/HintPwd" android:layout_below="@+id/etPwdR"
                 android:layout_alignLeft="@+id/etCorreoR" android:layout_marginTop="25dp"
-                android:layout_alignEnd="@+id/etCorreoR"/>
+                android:layout_alignEnd="@+id/etCorreoR" android:password="false"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
