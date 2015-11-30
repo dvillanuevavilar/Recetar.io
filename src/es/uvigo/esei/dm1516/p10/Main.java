@@ -21,12 +21,12 @@ public class Main extends Activity {
 
 
     public void crearDatos() {
-        Receta rc1 = new Receta("1", "Tortilla francesa", 5, "Facil", 2, "Huevos", "Batir y freir", "Juan", "Primer plato");
-        Receta rc2 = new Receta("2", "Tortilla espa\u00f1ola", 6, "Facil", 2, "Huevos y patatas", "Batir, pelar y freir", "Rosa", "Primer plato");
-        Receta rc3 = new Receta("3", "Carne asada", 3, "Media", 5, "Carne", "Asar la carne", "Juan", "Segundo plato");
-        Receta rc4 = new Receta("4", "Pollo asado", 2, "Media", 4, "Pollo", "Asar el pollo", "Rosa", "Segundo plato");
-        Receta rc5 = new Receta("5", "Tarta de queso", 1, "Dificil", 2, "Queso y tarta", "Abrir la nevera", "Rosa", "Postre");
-        Receta rc6 = new Receta("6", "Tarta helada", 3, "Dificil", 3, "Tarta y hielo", "Abrir el congelador", "Juan", "Postre");
+        Receta rc1 = new Receta(0, "Tortilla francesa", 5, "Facil", 2, "Huevos", "Batir y freir", "Juan", "Primer plato");
+        Receta rc2 = new Receta(0, "Tortilla espa\u00f1ola", 6, "Facil", 2, "Huevos y patatas", "Batir, pelar y freir", "Rosa", "Primer plato");
+        Receta rc3 = new Receta(0, "Carne asada", 3, "Media", 5, "Carne", "Asar la carne", "Juan", "Segundo plato");
+        Receta rc4 = new Receta(0, "Pollo asado", 2, "Media", 4, "Pollo", "Asar el pollo", "Rosa", "Segundo plato");
+        Receta rc5 = new Receta(0, "Tarta de queso", 1, "Dificil", 2, "Queso y tarta", "Abrir la nevera", "Rosa", "Postre");
+        Receta rc6 = new Receta(0, "Tarta helada", 3, "Dificil", 3, "Tarta y hielo", "Abrir el congelador", "Juan", "Postre");
 
         Usuario usr1 = new Usuario("juan@receta.es", "Juan Rodr�guez", "abc123.");
         Usuario usr2 = new Usuario("rosa@receta.es", "Rosa Lois", "abc123.");
@@ -86,7 +86,7 @@ public class Main extends Activity {
         //crearDatos();
 
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
-        AdaptadorSeccion adapter = new AdaptadorSeccion(this, secciones);
+        adapter = new AdaptadorSeccion(this, secciones);
         lista.setAdapter(adapter);
     }
 

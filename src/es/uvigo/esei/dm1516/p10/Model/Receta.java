@@ -3,7 +3,7 @@ package es.uvigo.esei.dm1516.p10.Model;
 import android.text.format.Time;
 
 public class Receta {
-    private String idReceta;
+    private int idReceta;
     private String titulo;
     private int tiempo;
     private String dificultad;
@@ -17,7 +17,7 @@ public class Receta {
 
     }
 
-    public Receta(String idReceta, String titulo, int tiempo, String dificultad, int numComensales, String ingredientes, String elaboracion, String autor, String seccion) {
+    public Receta(int idReceta, String titulo, int tiempo, String dificultad, int numComensales, String ingredientes, String elaboracion, String autor, String seccion) {
         this.idReceta = idReceta;
         this.titulo = titulo;
         this.tiempo = tiempo;
@@ -29,11 +29,11 @@ public class Receta {
         this.seccion = seccion;
     }
 
-    public String getIdReceta() {
+    public int getIdReceta() {
         return idReceta;
     }
 
-    public void setIdReceta(String idReceta) {
+    public void setIdReceta(int idReceta) {
         this.idReceta = idReceta;
     }
 

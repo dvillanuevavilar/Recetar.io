@@ -11,7 +11,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
             android:text="@string/crearreceta"
             android:id="@+id/textView9"
             android:layout_alignParentTop="true"
@@ -53,7 +53,7 @@
         <EditText
             android:layout_width="340dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|numberDecimal"
             android:ems="10"
             android:id="@+id/etTiempo"
             android:hint="@string/tiempo"
@@ -63,7 +63,7 @@
         <EditText
             android:layout_width="340dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textPersonName|numberDecimal"
             android:ems="10"
             android:id="@+id/etNumComensales"
             android:hint="@string/comensales"

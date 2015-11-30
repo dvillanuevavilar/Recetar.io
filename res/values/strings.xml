@@ -23,4 +23,7 @@
     <string name="tiempo">Tiempo</string>
     <string name="comensales">Número de comensales</string>
     <string name="autor">Autor</string>
+    <string name="primerplato">Primer plato</string>
+    <string name="segundoplato">Segundo plato</string>
+    <string name="postre">Postre</string>
 </resources>
