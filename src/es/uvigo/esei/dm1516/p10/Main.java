@@ -15,9 +15,10 @@ import es.uvigo.esei.dm1516.p10.Model.Usuario;
 import java.util.ArrayList;
 
 public class Main extends Activity {
-    private SparseArray<GrupoDeItems> secciones = new SparseArray<GrupoDeItems>();
+    private SparseArray<GrupoDeItems> secciones;
+    private AdaptadorSeccion adapter;
     private Usuario currentUser = new Usuario("usuario@example.com","usuarioPrueba","abc123.");
-    //private SqlIO db = ((App) this.getApplication()).getDb();
+
 
     public void crearDatos() {
         Receta rc1 = new Receta("1", "Tortilla francesa", 5, "Facil", 2, "Huevos", "Batir y freir", "Juan", "Primer plato");
@@ -27,7 +28,7 @@ public class Main extends Activity {
         Receta rc5 = new Receta("5", "Tarta de queso", 1, "Dificil", 2, "Queso y tarta", "Abrir la nevera", "Rosa", "Postre");
         Receta rc6 = new Receta("6", "Tarta helada", 3, "Dificil", 3, "Tarta y hielo", "Abrir el congelador", "Juan", "Postre");
 
-        Usuario usr1 = new Usuario("juan@receta.es", "Juan Rodríguez", "abc123.");
+        Usuario usr1 = new Usuario("juan@receta.es", "Juan Rodrï¿½guez", "abc123.");
         Usuario usr2 = new Usuario("rosa@receta.es", "Rosa Lois", "abc123.");
 
         if(!((App) this.getApplication()).getDb().existeUsuario(usr1.getEmail())){
@@ -76,27 +77,13 @@ public class Main extends Activity {
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
 
+        secciones = new SparseArray<GrupoDeItems>();
+
         Intent intentVerReceta = new Intent(Main.this, VerReceta.class);
         Intent intentLogin = new Intent(Main.this, Login.class);
         Main.this.startActivity(intentLogin);
 
-        crearDatos();
-        GrupoDeItems primeros = new GrupoDeItems("Primer Plato");
-        GrupoDeItems segundos = new GrupoDeItems("Segundo Plato");
-        GrupoDeItems postres = new GrupoDeItems("Postre");
-        ArrayList<Receta> recetas = ((App) this.getApplication()).getDb().listarRecetas();
-        for(Receta r : recetas){
-            if(r.getSeccion().equals("Primer plato")){
-                primeros.add(r);
-            }else if(r.getSeccion().equals("Segundo plato")){
-                segundos.add(r);
-            }else {
-                postres.add(r);
-            }
-        }
-        secciones.append(0, primeros);
-        secciones.append(1, segundos);
-        secciones.append(2, postres);
+        //crearDatos();
 
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
         AdaptadorSeccion adapter = new AdaptadorSeccion(this, secciones);
@@ -111,6 +98,24 @@ public class Main extends Activity {
     @Override
     public void onStart(){
         super.onStart();
+        GrupoDeItems primeros = new GrupoDeItems("Primer Plato");
+        GrupoDeItems segundos = new GrupoDeItems("Segundo Plato");
+        GrupoDeItems postres = new GrupoDeItems("Postre");
+
+
+        ArrayList<Receta> recetas = ((App) this.getApplication()).getDb().listarRecetas();
+        for(Receta r : recetas){
+            if(r.getSeccion().equals("Primer plato")){
+                primeros.add(r);
+            }else if(r.getSeccion().equals("Segundo plato")){
+                segundos.add(r);
+            }else {
+                postres.add(r);
+            }
+        }
+        secciones.append(0, primeros);
+        secciones.append(1, segundos);
+        secciones.append(2, postres);
     }
 
     @Override
