@@ -15,10 +15,14 @@ import es.uvigo.esei.dm1516.p10.Model.Usuario;
 import java.util.ArrayList;
 
 public class Main extends Activity {
+    private static final int REQUEST_CODE = 0;
     private SparseArray<GrupoDeItems> secciones;
     private AdaptadorSeccion adapter;
-    private Usuario currentUser = new Usuario("usuario@example.com","usuarioPrueba","abc123.");
+    private static Usuario currentUser;
 
+    public static Usuario getCurrentUser(){
+        return currentUser;
+    }
 
     public void crearDatos() {
         Receta rc1 = new Receta(0, "Tortilla francesa", 5, "Facil", 2, "Huevos", "Batir y freir", "Juan", "Primer plato");
@@ -31,30 +35,30 @@ public class Main extends Activity {
         Usuario usr1 = new Usuario("juan@receta.es", "Juan Rodr�guez", "abc123.");
         Usuario usr2 = new Usuario("rosa@receta.es", "Rosa Lois", "abc123.");
 
-        if(!((App) this.getApplication()).getDb().existeUsuario(usr1.getEmail())){
+        if (!((App) this.getApplication()).getDb().existeUsuario(usr1.getEmail())) {
             ((App) this.getApplication()).getDb().insertarUsuario(usr1);
         }
-        if(!((App) this.getApplication()).getDb().existeUsuario(usr2.getEmail())){
+        if (!((App) this.getApplication()).getDb().existeUsuario(usr2.getEmail())) {
             ((App) this.getApplication()).getDb().insertarUsuario(usr2);
         }
 
-        if(!((App) this.getApplication()).getDb().existeReceta(rc1.getIdReceta())){
-            ((App) this.getApplication()).getDb().insertarReceta(rc1,usr1.getEmail());
+        if (!((App) this.getApplication()).getDb().existeReceta(rc1.getIdReceta())) {
+            ((App) this.getApplication()).getDb().insertarReceta(rc1, usr1.getEmail());
         }
-        if(!((App) this.getApplication()).getDb().existeReceta(rc2.getIdReceta())){
-            ((App) this.getApplication()).getDb().insertarReceta(rc2,usr1.getEmail());
+        if (!((App) this.getApplication()).getDb().existeReceta(rc2.getIdReceta())) {
+            ((App) this.getApplication()).getDb().insertarReceta(rc2, usr1.getEmail());
         }
-        if(!((App) this.getApplication()).getDb().existeReceta(rc3.getIdReceta())){
-            ((App) this.getApplication()).getDb().insertarReceta(rc3,usr1.getEmail());
+        if (!((App) this.getApplication()).getDb().existeReceta(rc3.getIdReceta())) {
+            ((App) this.getApplication()).getDb().insertarReceta(rc3, usr1.getEmail());
         }
-        if(!((App) this.getApplication()).getDb().existeReceta(rc4.getIdReceta())){
-            ((App) this.getApplication()).getDb().insertarReceta(rc4,usr2.getEmail());
+        if (!((App) this.getApplication()).getDb().existeReceta(rc4.getIdReceta())) {
+            ((App) this.getApplication()).getDb().insertarReceta(rc4, usr2.getEmail());
         }
-        if(!((App) this.getApplication()).getDb().existeReceta(rc5.getIdReceta())){
-            ((App) this.getApplication()).getDb().insertarReceta(rc5,usr2.getEmail());
+        if (!((App) this.getApplication()).getDb().existeReceta(rc5.getIdReceta())) {
+            ((App) this.getApplication()).getDb().insertarReceta(rc5, usr2.getEmail());
         }
-        if(!((App) this.getApplication()).getDb().existeReceta(rc6.getIdReceta())){
-            ((App) this.getApplication()).getDb().insertarReceta(rc6,usr2.getEmail());
+        if (!((App) this.getApplication()).getDb().existeReceta(rc6.getIdReceta())) {
+            ((App) this.getApplication()).getDb().insertarReceta(rc6, usr2.getEmail());
         }
 
         /*GrupoDeItems primeros = new GrupoDeItems("Primer Plato");
@@ -78,12 +82,28 @@ public class Main extends Activity {
         setContentView(R.layout.main);
 
         secciones = new SparseArray<GrupoDeItems>();
-
-        Intent intentVerReceta = new Intent(Main.this, VerReceta.class);
-        Intent intentLogin = new Intent(Main.this, Login.class);
-        Main.this.startActivity(intentLogin);
-
         //crearDatos();
+
+        /*ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
+        adapter = new AdaptadorSeccion(this, secciones);
+        lista.setAdapter(adapter);*/
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        if ((resultCode == RESULT_OK) && (requestCode == REQUEST_CODE)) {
+            currentUser = new Usuario(data.getExtras().getString("email"), data.getExtras().getString("nombre"), data.getExtras().getString("pass"));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (currentUser != null) {
+            Toast.makeText(this, "Usuario: " + currentUser.getNombre() + " logueado", Toast.LENGTH_LONG).show();
+        }
 
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
         adapter = new AdaptadorSeccion(this, secciones);
@@ -91,12 +111,12 @@ public class Main extends Activity {
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         GrupoDeItems primeros = new GrupoDeItems("Primer Plato");
         GrupoDeItems segundos = new GrupoDeItems("Segundo Plato");
@@ -104,18 +124,35 @@ public class Main extends Activity {
 
 
         ArrayList<Receta> recetas = ((App) this.getApplication()).getDb().listarRecetas();
-        for(Receta r : recetas){
-            if(r.getSeccion().equals("Primer plato")){
+        for (Receta r : recetas) {
+            if (r.getSeccion().equals("Primer plato")) {
                 primeros.add(r);
-            }else if(r.getSeccion().equals("Segundo plato")){
+            } else if (r.getSeccion().equals("Segundo plato")) {
                 segundos.add(r);
-            }else {
+            } else {
                 postres.add(r);
             }
         }
         secciones.append(0, primeros);
         secciones.append(1, segundos);
         secciones.append(2, postres);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        //menu.clear();
+        if (currentUser != null) {
+            menu.setGroupEnabled(R.id.grupo2, false);
+            menu.setGroupVisible(R.id.grupo2, false);
+            menu.setGroupEnabled(R.id.grupo1, true);
+            menu.setGroupVisible(R.id.grupo1, true);
+        }else{
+            menu.setGroupEnabled(R.id.grupo1, false);
+            menu.setGroupVisible(R.id.grupo1, false);
+            menu.setGroupEnabled(R.id.grupo2, true);
+            menu.setGroupVisible(R.id.grupo2, true);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -131,14 +168,27 @@ public class Main extends Activity {
             case R.id.mainMenuItemOpt1:
                 break;
             case R.id.mainMenuItemOpt2:
-                Intent intentLogin = new Intent(Main.this, Login.class);
-                Main.this.startActivity(intentLogin);
                 break;
             case R.id.mainMenuItemOpt3:
                 Intent intentCrearReceta = new Intent(Main.this, CrearReceta.class);
                 Main.this.startActivity(intentCrearReceta);
                 break;
+            case R.id.mainMenuItemOpt4:
+                currentUser = null;
+                break;
+            case R.id.mainMenu2ItemOpt1:
+                break;
+            case R.id.mainMenu2ItemOpt2:
+                //Intent de login
+                Intent intentLogin2 = new Intent(Main.this, Login.class);
+                Main.this.startActivityForResult(intentLogin2, REQUEST_CODE);
+                break;
+            case R.id.mainMenu2ItemOpt3:
+                Intent intentRegistro = new Intent(Main.this, Registro.class);
+                Main.this.startActivity(intentRegistro);
+                break;
         }
         return true;
     }
+
 }

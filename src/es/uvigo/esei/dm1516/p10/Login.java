@@ -9,9 +9,19 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+import es.uvigo.esei.dm1516.p10.Core.App;
 
-public class Login extends Activity {
-    public void onCreate(Bundle bundle){
+public class Login extends Activity{
+    private String comprobarLogin(String email, String pass){
+        if(((App) this.getApplication()).getDb().comprobarLogin(email, pass)){
+            return ((App) this.getApplication()).getDb().obtenerNombre(email);
+        }else {
+            return "false";
+        }
+    }
+
+    public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.login);
@@ -23,8 +33,18 @@ public class Login extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Se enviaran los datos para comprobar si son correctos
-                Login.this.finish();
+                if(!comprobarLogin(etCorreo.getText().toString(), etPass.getText().toString()).equals("false")){
+                    String n =comprobarLogin(etCorreo.getText().toString(), etPass.getText().toString());
+                    Intent data = new Intent();
+                    data.putExtra("email", etCorreo.getText().toString());
+                    data.putExtra("nombre", n);
+                    data.putExtra("pass", etPass.getText().toString());
+                    setResult(RESULT_OK, data);
+                    Login.this.finish();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Usuario no v\u00e1lido",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

@@ -13,6 +13,8 @@ import es.uvigo.esei.dm1516.p10.Model.Receta;
 
 import java.util.Calendar;
 
+import static es.uvigo.esei.dm1516.p10.Main.*;
+
 public class CrearReceta extends Activity {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -93,9 +95,11 @@ public class CrearReceta extends Activity {
                 String ingredientes = etIngredientes.getText().toString();
                 String elaboracion = etElaboracion.getText().toString();
                 String seccion = etSeccion.getText().toString();
+                String autor =Main.getCurrentUser().getNombre();
+                String email = Main.getCurrentUser().getEmail();
 
-                Receta receta = new Receta(0,titulo, tiempo, dificultad, numComensales, ingredientes, elaboracion, "POR_IMPLEMENTAR", seccion);
-                ((App) getApplication()).getDb().insertarReceta(receta, "juan@receta.es");
+                Receta receta = new Receta(0,titulo, tiempo, dificultad, numComensales, ingredientes, elaboracion, autor, seccion);
+                ((App) getApplication()).getDb().insertarReceta(receta, email);
 
                 CrearReceta.this.finish();
             }

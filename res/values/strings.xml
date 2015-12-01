@@ -26,4 +26,5 @@
     <string name="primerplato">Primer plato</string>
     <string name="segundoplato">Segundo plato</string>
     <string name="postre">Postre</string>
+    <string name="app_sinc">Sincronizar</string>
 </resources>

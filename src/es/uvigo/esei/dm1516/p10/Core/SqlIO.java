@@ -9,6 +9,7 @@ import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
 import java.sql.Blob;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by Diego on 26/11/2015.
@@ -115,7 +116,7 @@ public class SqlIO extends SQLiteOpenHelper {
                 new String[]{email});
         if (cursor.moveToFirst()) {
             do {
-                lista.add(new Receta(cursor.getString(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3),
+                lista.add(new Receta(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3),
                         cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8)));
             } while (cursor.moveToNext());
         }
@@ -187,6 +188,17 @@ public class SqlIO extends SQLiteOpenHelper {
             return true;
         } else
             return false;
+    }
+
+    public String obtenerNombre(String email){
+        String nombre = null;
+        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT nombre FROM usuario where email=?",
+                new String[]{email});
+
+        if (cursor.moveToFirst()) {
+            nombre = cursor.getString(0);
+        }
+        return nombre;
     }
 
     public void insertarUsuario(Usuario user) {

@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/mainMenuItemOpt1" android:title="@string/favoritos"></item>
-    <item android:id="@+id/mainMenuItemOpt2" android:title="@string/cerrar_sesion"></item>
-    <item android:id="@+id/mainMenuItemOpt3" android:title="@string/crearreceta"></item>
-    <item android:id="@+id/mainMenuItemOpt4" android:title="Ver Receta"></item>
+    <group android:id="@+id/grupo1">
+        <item android:id="@+id/mainMenuItemOpt1" android:title="@string/app_sinc"></item>
+        <item android:id="@+id/mainMenuItemOpt2" android:title="@string/favoritos"></item>
+        <item android:id="@+id/mainMenuItemOpt3" android:title="@string/crearreceta"></item>
+        <item android:id="@+id/mainMenuItemOpt4" android:title="@string/cerrar_sesion"></item>
+    </group>
+    <group android:id="@+id/grupo2">
+        <item android:id="@+id/mainMenu2ItemOpt1" android:title="@string/app_sinc"></item>
+        <item android:id="@+id/mainMenu2ItemOpt2" android:title="@string/app_Login"></item>
+        <item android:id="@+id/mainMenu2ItemOpt3" android:title="@string/app_Registro"></item>
+    </group>
 </menu>
