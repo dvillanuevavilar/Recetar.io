@@ -1,7 +1,9 @@
 package es.uvigo.esei.dm1516.p10;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import es.uvigo.esei.dm1516.p10.Model.Receta;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Main extends Activity {
     private static final int REQUEST_CODE = 0;
@@ -101,9 +104,6 @@ public class Main extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        if (currentUser != null) {
-            Toast.makeText(this, "Usuario: " + currentUser.getNombre() + " logueado", Toast.LENGTH_LONG).show();
-        }
 
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
         adapter = new AdaptadorSeccion(this, secciones);
@@ -113,6 +113,22 @@ public class Main extends Activity {
     @Override
     public void onStop() {
         super.onStop();
+
+        SharedPreferences usuario = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = usuario.edit();
+        //Si el usuario no ciera sesión lo almacenamos
+        if(currentUser!=null) {
+            editor.clear();
+            editor.putBoolean("estado",true);
+            editor.putString("email", currentUser.getEmail());
+            editor.putString("contrasenha", currentUser.getContrasenha());
+            editor.putString("nombre", currentUser.getNombre());
+            editor.apply();
+        }else{
+            editor.clear();
+            editor.putBoolean("estado",false);
+            editor.apply();
+        }
     }
 
     @Override
@@ -136,6 +152,16 @@ public class Main extends Activity {
         secciones.append(0, primeros);
         secciones.append(1, segundos);
         secciones.append(2, postres);
+
+        //Cargamos usuario si existe
+        SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
+        Boolean estado = prefs.getBoolean("estado",false);
+        if(estado==true){
+            String email = prefs.getString("email","");
+            String nombre = prefs.getString("nombre","");
+            String contrasenha = prefs.getString("contrasenha","");
+            currentUser = new Usuario(email,nombre,contrasenha);
+        }
     }
 
     @Override
@@ -175,6 +201,7 @@ public class Main extends Activity {
                 break;
             case R.id.mainMenuItemOpt4:
                 currentUser = null;
+                Toast.makeText(this, "Desconectado", Toast.LENGTH_LONG).show();
                 break;
             case R.id.mainMenu2ItemOpt1:
                 break;

@@ -40,6 +40,7 @@ public class Login extends Activity{
                     data.putExtra("nombre", n);
                     data.putExtra("pass", etPass.getText().toString());
                     setResult(RESULT_OK, data);
+                    Toast.makeText(getApplicationContext(),"Logueado correctamente",Toast.LENGTH_SHORT).show();
                     Login.this.finish();
                 }else{
                     Toast.makeText(getApplicationContext(),"Usuario no v\u00e1lido",Toast.LENGTH_SHORT).show();
