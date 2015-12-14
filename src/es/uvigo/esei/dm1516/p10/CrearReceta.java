@@ -63,7 +63,7 @@ public class CrearReceta extends Activity {
             public void onClick(View v) {
                 final CharSequence[] dificulades = {" Fácil ", " Medio ", " Dificil "};
                 AlertDialog.Builder dialogDificultad = new AlertDialog.Builder(CrearReceta.this);
-                dialogDificultad.setTitle("Selecciona una sección");
+                dialogDificultad.setTitle("Selecciona un nivel de dificultad");
                 dialogDificultad.setSingleChoiceItems(dificulades, -1, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         switch (item) {
@@ -95,10 +95,10 @@ public class CrearReceta extends Activity {
                 String ingredientes = etIngredientes.getText().toString();
                 String elaboracion = etElaboracion.getText().toString();
                 String seccion = etSeccion.getText().toString();
-                String autor =Main.getCurrentUser().getNombre();
+                String autor = Main.getCurrentUser().getNombre();
                 String email = Main.getCurrentUser().getEmail();
 
-                Receta receta = new Receta(0,titulo, tiempo, dificultad, numComensales, ingredientes, elaboracion, autor, seccion);
+                Receta receta = new Receta(0, titulo, tiempo, dificultad, numComensales, ingredientes, elaboracion, autor, seccion);
                 ((App) getApplication()).getDb().insertarReceta(receta, email);
 
                 CrearReceta.this.finish();
