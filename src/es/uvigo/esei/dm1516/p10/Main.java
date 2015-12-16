@@ -35,6 +35,9 @@ public class Main extends Activity {
         Receta rc5 = new Receta(0, "Tarta de queso", 1, "Dificil", 2, "Queso y tarta", "Abrir la nevera", "Rosa", "Postre");
         Receta rc6 = new Receta(0, "Tarta helada", 3, "Dificil", 3, "Tarta y hielo", "Abrir el congelador", "Juan", "Postre");
 
+        rc6.setIngredientes("Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per. In usu latine equidem dolores. Quo no falli viris intellegam, ut fugit veritus placerat per.");
+        rc6.setElaboracion("Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per. In usu latine equidem dolores. Quo no falli viris intellegam, ut fugit veritus placerat per.");
+
         Usuario usr1 = new Usuario("juan@receta.es", "Juan Rodr�guez", "abc123.");
         Usuario usr2 = new Usuario("rosa@receta.es", "Rosa Lois", "abc123.");
 
@@ -63,19 +66,6 @@ public class Main extends Activity {
         if (!((App) this.getApplication()).getDb().existeReceta(rc6.getIdReceta())) {
             ((App) this.getApplication()).getDb().insertarReceta(rc6, usr2.getEmail());
         }
-
-        /*GrupoDeItems primeros = new GrupoDeItems("Primer Plato");
-        primeros.add(rc1);
-        primeros.add(rc2);
-        secciones.append(0, primeros);
-        GrupoDeItems segundos = new GrupoDeItems("Segundo Plato");
-        segundos.add(rc3);
-        segundos.add(rc4);
-        secciones.append(1, segundos);
-        GrupoDeItems postres = new GrupoDeItems("Postre");
-        postres.add(rc5);
-        postres.add(rc6);
-        secciones.append(2, postres);*/
     }
 
     @Override
@@ -87,10 +77,9 @@ public class Main extends Activity {
         secciones = new SparseArray<GrupoDeItems>();
         //crearDatos();
 
-        /*ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
+        ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
         adapter = new AdaptadorSeccion(this, secciones);
-        lista.setAdapter(adapter);*/
-
+        lista.setAdapter(adapter);
     }
 
     @Override
@@ -105,9 +94,7 @@ public class Main extends Activity {
     public void onResume() {
         super.onResume();
 
-        ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
-        adapter = new AdaptadorSeccion(this, secciones);
-        lista.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

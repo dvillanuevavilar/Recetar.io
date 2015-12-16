@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" android:weightSum="1">
 
     <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content" android:background="#282828" android:layout_margin="5dp"
+            android:id="@+id/lay">
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -15,81 +16,59 @@
                 android:id="@+id/tvTituloSubItem"
                 android:layout_marginStart="19dp" android:paddingTop="10dp"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/tiempo"
-                android:id="@+id/textView2"
-                android:layout_marginStart="14dp"
-                android:layout_below="@+id/tvTituloSubItem"
-                android:layout_alignStart="@+id/tvTituloSubItem"
-                android:layout_marginTop="2dp"/>
+                android:layout_alignParentStart="true" android:layout_marginBottom="10dp"/>
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView7"
+                   android:src="@drawable/ic_timer_white_24dp"
+                   android:layout_above="@+id/imageView8" android:layout_alignStart="@+id/tvTituloSubItem"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="10 minutos"
                 android:id="@+id/tvTiempoSubitems"
-                android:layout_alignTop="@+id/textView2"
-                android:layout_toEndOf="@+id/textView2"
-                android:layout_marginLeft="5dp"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/dificultad"
-                android:id="@+id/textView3"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/textView2"
-                android:layout_alignStart="@+id/textView2"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginLeft="5dp"
+                android:layout_above="@+id/imageView8" android:layout_toEndOf="@+id/imageView7"/>
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView8"
+                   android:src="@drawable/ic_room_service_white_24dp"
+                   android:layout_below="@+id/tvNumComensalesSubItems" android:layout_alignStart="@+id/imageView7"
+                   android:layout_marginTop="14dp"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Facil"
                 android:id="@+id/tvDificultadSubitems"
-                android:layout_alignTop="@+id/textView3"
-                android:layout_toEndOf="@id/textView3"
-                android:layout_marginLeft="5dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/comensales"
-                android:id="@+id/textView10"
-                android:layout_alignBottom="@+id/tvNumComensalesSubItems"
-                android:layout_toStartOf="@+id/tvNumComensalesSubItems"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:id="@+id/tvNumComensalesSubItems"
                 android:layout_marginLeft="5dp"
-                android:layout_alignTop="@+id/tvTiempoSubitems"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="25dp"/>
+                android:layout_alignBottom="@+id/imageView8" android:layout_alignStart="@+id/tvTiempoSubitems"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/autor"
-                android:id="@+id/textView11"
-                android:layout_alignBaseline="@+id/tvDificultadSubitems"
-                android:layout_alignBottom="@+id/tvDificultadSubitems"
-                android:layout_alignStart="@+id/textView10"/>
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView9"
+                   android:src="@drawable/ic_group_white_24dp"
+                   android:layout_below="@+id/tvTituloSubItem" android:layout_alignParentEnd="true"
+                   android:layout_marginEnd="98dp"/>
 
-            <TextView
+        <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:id="@+id/tvNumComensalesSubItems"
+                    android:layout_marginLeft="5dp"
+                    android:layout_alignBottom="@+id/imageView9" android:layout_alignStart="@+id/tvAutorSuItems"/>
+
+        <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageView10"
+                   android:src="@drawable/ic_person_pin_white_24dp"
+                   android:layout_alignTop="@+id/imageView8" android:layout_alignStart="@+id/imageView9"/>
+
+        <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="author"
                 android:id="@+id/tvAutorSuItems"
                 android:layout_marginLeft="5dp"
-                android:layout_alignBaseline="@+id/textView11"
-                android:layout_alignBottom="@+id/textView11"
-                android:layout_toEndOf="@+id/textView11"/>
+                android:layout_alignBottom="@+id/imageView10" android:layout_toEndOf="@+id/imageView10"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/nulo"
+                android:layout_below="@+id/imageView8" android:layout_alignStart="@+id/imageView8"/>
     </RelativeLayout>
 </LinearLayout>
