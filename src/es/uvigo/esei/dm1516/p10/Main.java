@@ -10,12 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 import es.uvigo.esei.dm1516.p10.Core.App;
-import es.uvigo.esei.dm1516.p10.Core.SqlIO;
+import es.uvigo.esei.dm1516.p10.Mapper.DataFetcher;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class Main extends Activity {
     private static final int REQUEST_CODE = 0;
@@ -80,6 +81,12 @@ public class Main extends Activity {
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
         adapter = new AdaptadorSeccion(this, secciones);
         lista.setAdapter(adapter);
+
+        try {
+            new DataFetcher(this).execute(new URL("http://recetario.hol.es/select-receta.php"));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -188,7 +195,7 @@ public class Main extends Activity {
                 break;
             case R.id.mainMenuItemOpt4:
                 currentUser = null;
-                Toast.makeText(this, "Desconectado", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.mainMenu2ItemOpt1:
                 break;
