@@ -1,7 +1,10 @@
 package es.uvigo.esei.dm1516.p10;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -53,8 +56,14 @@ public class Login extends Activity{
         tvRegistro.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                Intent intentRegistro = new Intent(Login.this, Registro.class);
-                Login.this.startActivity(intentRegistro);
+                ConnectivityManager connMgr = (ConnectivityManager) Login.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                if(networkInfo !=null && networkInfo.isConnected()){
+                    Intent intentRegistro = new Intent(Login.this, Registro.class);
+                    Login.this.startActivity(intentRegistro);
+                }else{
+                    Toast.makeText(Login.this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
         });

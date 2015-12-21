@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -66,6 +68,17 @@ public class Main extends Activity {
         }
         if (!((App) this.getApplication()).getDb().existeReceta(rc6.getIdReceta())) {
             ((App) this.getApplication()).getDb().insertarReceta(rc6);
+        }
+    }
+
+    public boolean estadoConexion(){
+
+        ConnectivityManager connMgr = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if(networkInfo !=null && networkInfo.isConnected()){
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -140,6 +153,7 @@ public class Main extends Activity {
         secciones.append(0, primeros);
         secciones.append(1, segundos);
         secciones.append(2, postres);
+        adapter.notifyDataSetChanged();
 
         //Cargamos usuario si existe
         SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
@@ -189,8 +203,12 @@ public class Main extends Activity {
             case R.id.mainMenuItemOpt2:
                 break;
             case R.id.mainMenuItemOpt3:
-                Intent intentCrearReceta = new Intent(Main.this, CrearReceta.class);
-                Main.this.startActivity(intentCrearReceta);
+                if(estadoConexion()){
+                    Intent intentCrearReceta = new Intent(Main.this, CrearReceta.class);
+                    Main.this.startActivity(intentCrearReceta);
+                }else{
+                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.mainMenuItemOpt4:
                 currentUser = null;
@@ -209,8 +227,12 @@ public class Main extends Activity {
                 Main.this.startActivityForResult(intentLogin2, REQUEST_CODE);
                 break;
             case R.id.mainMenu2ItemOpt3:
-                Intent intentRegistro = new Intent(Main.this, Registro.class);
-                Main.this.startActivity(intentRegistro);
+                if(estadoConexion()){
+                    Intent intentRegistro = new Intent(Main.this, Registro.class);
+                    Main.this.startActivity(intentRegistro);
+                }else{
+                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return true;

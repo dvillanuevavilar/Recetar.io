@@ -225,7 +225,7 @@ public class SqlIO extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try{
-            db.execSQL("DELETE FROM favoritas");
+                db.execSQL("DELETE FROM favoritas");
             db.execSQL("DELETE FROM receta");
             db.execSQL("DELETE FROM usuario");
             db.setTransactionSuccessful();

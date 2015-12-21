@@ -2,6 +2,7 @@ package es.uvigo.esei.dm1516.p10.Mapper;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 import es.uvigo.esei.dm1516.p10.Core.App;
 import es.uvigo.esei.dm1516.p10.Core.SqlIO;
 import es.uvigo.esei.dm1516.p10.Main;
@@ -39,8 +40,8 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
 
         try {
             HttpURLConnection conn = (HttpURLConnection) url[0].openConnection();
-            conn.setReadTimeout(1000);
-            conn.setConnectTimeout(1000);
+            conn.setReadTimeout(1500);
+            conn.setConnectTimeout(1500);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
 
@@ -116,6 +117,16 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
             Log.e("DataFetcher", "Impossible convert stream to string");
         }
         return toret.toString();
+    }
+
+    @Override
+    protected void onPostExecute(Boolean aBoolean) {
+        super.onPostExecute(aBoolean);
+        if (aBoolean) {
+            Toast.makeText(main, "Actualizado", Toast.LENGTH_SHORT).show();
+            main.onStart();
+        } else
+            Toast.makeText(main, "Error en actualización", Toast.LENGTH_SHORT).show();
     }
 }
 

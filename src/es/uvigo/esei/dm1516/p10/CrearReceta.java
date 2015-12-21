@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.Window;
 import android.widget.*;
 import es.uvigo.esei.dm1516.p10.Core.App;
+import es.uvigo.esei.dm1516.p10.Mapper.InsertsConnection;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 
 import static es.uvigo.esei.dm1516.p10.Main.*;
@@ -89,18 +92,38 @@ public class CrearReceta extends Activity {
             @Override
             public void onClick(View v) {
                 String titulo = etTitulo.getText().toString();
-                int tiempo = Integer.parseInt(etTiempo.getText().toString());
+                int tiempo = -1;
+                if (etTiempo.getText().toString().length() > 0) {
+                    tiempo = Integer.parseInt(etTiempo.getText().toString());
+                }
                 String dificultad = etDificultad.getText().toString();
-                int numComensales = Integer.parseInt(etNumComensales.getText().toString());
+                int numComensales = -1;
+                if (etNumComensales.getText().toString().length() > 0) {
+                    numComensales = Integer.parseInt(etNumComensales.getText().toString());
+                }
                 String ingredientes = etIngredientes.getText().toString();
                 String elaboracion = etElaboracion.getText().toString();
                 String seccion = etSeccion.getText().toString();
                 String email = Main.getCurrentUser().getEmail();
 
                 Receta receta = new Receta(0, titulo, tiempo, dificultad, numComensales, ingredientes, elaboracion, seccion, email);
-                ((App) getApplication()).getDb().insertarReceta(receta);
 
-                CrearReceta.this.finish();
+                if (receta.getTitulo().length() > 0 && receta.getSeccion().length() > 0 && receta.getDificultad().length() > 0
+                        && receta.getIngredientes().length() > 0 && receta.getElaboracion().length() > 0
+                        && Integer.toString(receta.getTiempo()).length() > 0 && receta.getTiempo() > 0
+                        && Integer.toString(receta.getNumComensales()).length() > 0 && receta.getNumComensales() > 0) {
+
+                    //((App) getApplication()).getDb().insertarReceta(receta, email);
+                    try {
+                        new InsertsConnection("receta", receta, email).execute(new URL("http://recetario.hol.es/insert-receta.php"));
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+
+                    CrearReceta.this.finish();
+                } else {
+                    Toast.makeText(CrearReceta.this, "No puede haber campos vacios", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
