@@ -188,7 +188,7 @@ public class Main extends Activity {
                 break;
             case R.id.mainMenuItemOpt4:
                 currentUser = null;
-                Toast.makeText(this, "Desconectado", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.mainMenu2ItemOpt1:
                 break;
