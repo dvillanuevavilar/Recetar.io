@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import es.uvigo.esei.dm1516.p10.Core.App;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 
 public class AdaptadorSeccion extends BaseExpandableListAdapter {
@@ -49,12 +50,13 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         TextView tvDificultad = (TextView) convertView.findViewById(R.id.tvDificultadSubitems);
         TextView tvNumComensales = (TextView) convertView.findViewById(R.id.tvNumComensalesSubItems);
         TextView tvAutor = (TextView) convertView.findViewById(R.id.tvAutorSuItems);
+        String nombreAutor = ((App) activity.getApplication()).getDb().obtenerNombre(children.getAutor());
 
         tvTitulo.setText(children.getTitulo());
         tvTiempo.setText(String.valueOf(children.getTiempo()));
         tvDificultad.setText(children.getDificultad());
         tvNumComensales.setText(String.valueOf(children.getNumComensales()));
-        tvAutor.setText(children.getAutor());
+        tvAutor.setText(nombreAutor);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +67,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
                 intentVerReceta.putExtra("tiempo", String.valueOf(children.getTiempo()));
                 intentVerReceta.putExtra("numComensales", String.valueOf(children.getNumComensales()));
                 intentVerReceta.putExtra("dificultad", children.getDificultad());
-                intentVerReceta.putExtra("autor", children.getAutor());
+                intentVerReceta.putExtra("autor", nombreAutor);
                 intentVerReceta.putExtra("ingredientes", children.getIngredientes());
                 intentVerReceta.putExtra("elaboracion", children.getElaboracion());
                 activity.startActivity(intentVerReceta);
@@ -75,50 +77,50 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
     }
 
     // Nos devuelve los datos asociados a un subitem en base
-    // a la posición
+    // a la posiciï¿½n
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return grupos.get(groupPosition).get(childPosition);
     }
 
     // Devuelve el id de un item o subitem en base a la
-    // posición de item y subitem
+    // posiciï¿½n de item y subitem
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return 0;
     }
 
-    // Nos devuelve la cantidad de subitems que tiene un ítem
+    // Nos devuelve la cantidad de subitems que tiene un ï¿½tem
     @Override
     public int getChildrenCount(int groupPosition) {
         return grupos.get(groupPosition).size();
     }
 
-    //Los datos de un ítem especificado por groupPosition
+    //Los datos de un ï¿½tem especificado por groupPosition
     @Override
     public Object getGroup(int groupPosition) {
         return grupos.get(groupPosition);
     }
 
-    //La cantidad de ítem que tenemos definidos
+    //La cantidad de ï¿½tem que tenemos definidos
     @Override
     public int getGroupCount() {
         return grupos.size();
     }
 
-    //Método que se invoca al contraer un ítem
+    //Mï¿½todo que se invoca al contraer un ï¿½tem
     @Override
     public void onGroupCollapsed(int groupPosition) {
         super.onGroupCollapsed(groupPosition);
     }
 
-    //Método que se invoca al expandir un ítem
+    //Mï¿½todo que se invoca al expandir un ï¿½tem
     @Override
     public void onGroupExpanded(int groupPosition) {
         super.onGroupExpanded(groupPosition);
     }
 
-    //Devuelve el id de un ítem
+    //Devuelve el id de un ï¿½tem
     @Override
     public long getGroupId(int groupPosition) {
         return 0;
@@ -129,7 +131,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         return false;
     }
 
-    //Nos informa si es seleccionable o no un ítem o subitem
+    //Nos informa si es seleccionable o no un ï¿½tem o subitem
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;

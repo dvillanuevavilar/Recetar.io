@@ -3,8 +3,10 @@ package es.uvigo.esei.dm1516.p10.Mapper;
 import android.os.AsyncTask;
 import android.util.Log;
 import es.uvigo.esei.dm1516.p10.Core.App;
+import es.uvigo.esei.dm1516.p10.Core.SqlIO;
 import es.uvigo.esei.dm1516.p10.Main;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
+import es.uvigo.esei.dm1516.p10.Model.Usuario;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +23,6 @@ import java.util.Iterator;
 
 public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
     private Main main;
-    private String time;
 
     public DataFetcher(Main mainActivity) {
         this.main = mainActivity;
@@ -30,47 +31,72 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
     @Override
     public Boolean doInBackground(URL... url) {
         boolean toret = false;
-        InputStream is = null;
+        InputStream in = null;
+        JSONObject jsonObject;
+        JSONArray jsonArray_users;
+        JSONArray jsonArray_recetas;
+        JSONArray jsonArray_favs;
 
         try {
             HttpURLConnection conn = (HttpURLConnection) url[0].openConnection();
-            conn.setReadTimeout(1000 /* millisegundos */);
-            conn.setConnectTimeout(1000 /* millisegundos */);
+            conn.setReadTimeout(1000);
+            conn.setConnectTimeout(1000);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
 
-            // Obtener la respuesta del servidor
+            //Connect to server
             conn.connect();
-            int codigoRespuesta = conn.getResponseCode();
-            is = conn.getInputStream();
+            in = conn.getInputStream();
 
-            JSONObject jsonObject = new JSONObject(this.getStringFromStream(is));
-            JSONArray jsonArray = jsonObject.getJSONArray("recetas");
+            //Update SQLite
+            SqlIO mydb = ((App) main.getApplication()).getDb();
+            mydb.burnData();
+            jsonObject = new JSONObject(this.getStringFromStream(in));
 
-            Receta receta ;
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
-                receta = new Receta(0, obj.getString("titulo"),
-                        Integer.valueOf(obj.getString("tiempo")),
-                        obj.getString("dificultad"),
-                        Integer.valueOf(obj.getString("numComensales")), "aaaaa", "bbb", "autor", "sections");
-                ((App) main.getApplication()).getDb().insertarReceta(receta, "rosa@receta.es");
+            //Insert-users
+            jsonArray_users = jsonObject.getJSONArray("usuarios");
+            Usuario usuario;
+            for (int i = 0; i < jsonArray_users.length(); i++) {
+                JSONObject obj = jsonArray_users.getJSONObject(i);
+                usuario = new Usuario(obj.getString("email"), obj.getString("nombre"), "0000");
+                mydb.insertarUsuario(usuario);
             }
 
-            Log.d("json", String.valueOf(jsonArray.length()));
+            //Insert-recetas
+            jsonArray_recetas = jsonObject.getJSONArray("recetas");
+            Receta receta;
+            for (int i = 0; i < jsonArray_recetas.length(); i++) {
+                JSONObject obj = jsonArray_recetas.getJSONObject(i);
+                receta = new Receta(Integer.valueOf(obj.getString("idReceta")),
+                        obj.getString("titulo"),
+                        Integer.valueOf(obj.getString("tiempo")),
+                        obj.getString("dificultad"),
+                        Integer.valueOf(obj.getString("numComensales")),
+                        obj.getString("ingredientes"),
+                        obj.getString("elaboracion"),
+                        obj.getString("seccion"),
+                        obj.getString("usuario_email"));
+                mydb.insertarReceta(receta);
+            }
+
+            //Insert-favs
+            jsonArray_favs = jsonObject.getJSONArray("favoritas");
+            for (int i = 0; i < jsonArray_favs.length(); i++) {
+                JSONObject obj = jsonArray_favs.getJSONObject(i);
+                mydb.insertarFavorita(obj.getString("receta_idReceta"), obj.getString("usuario_email"));
+            }
+
             toret = true;
-        } catch (ProtocolException exc) {
-            Log.d("TimeFetcher", "error i/o " + exc.getMessage());
         } catch (IOException exc) {
-            Log.d("TimeFetcher", "error i/o " + exc.getMessage());
+            Log.d("DataFetcher", "error i/o " + exc.getMessage());
         } catch (JSONException e) {
             e.printStackTrace();
         } finally {
-            if (is != null) {
+            if (in != null) {
                 try {
-                    is.close();
+                    in.close();
                 } catch (IOException exc) {
-                    Log.d("TimeFetcher", "Impossible to close server data");
+                    Log.d("DataFetcher", "Impossible to close server data");
                 }
             }
         }
@@ -78,31 +104,19 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
         return toret;
     }
 
-    private String getStringFromStream(InputStream is) {
+    private String getStringFromStream(InputStream in) {
         StringBuilder toret = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(in))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 toret.append(line);
             }
         } catch (IOException exc) {
-            Log.e("Main", "Impossible convert stream to string");
+            Log.e("DataFetcher", "Impossible convert stream to string");
         }
         return toret.toString();
     }
-
-    /*@Override
-    public void onPostExecute(Boolean result) {
-        this.main.setTime(this.time);
-        this.main.setStatus("Connection OK");
-    }
-
-    @Override
-    public void onPreExecute() {
-        this.main.setStatus("Connecting...");
-    }*/
-
 }
 
 

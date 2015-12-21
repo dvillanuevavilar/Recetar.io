@@ -11,9 +11,6 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-/**
- * Created by Diego on 26/11/2015.
- */
 public class SqlIO extends SQLiteOpenHelper {
     public static String DATABASE_NAME = "recetario_db";
     public static int DATABASE_VERSION = 3;
@@ -51,7 +48,6 @@ public class SqlIO extends SQLiteOpenHelper {
                     + "numComensales int NOT NULL,"
                     + "ingredientes text NOT NULL,"
                     + "elaboracion text NOT  NULL,"
-                    + "autor string(20) NOT NULL,"
                     + "seccion string(20) NOT NULL,"
                     //+ "imagen blob,"
                     + "usuario_email string(30) NOT NULL,"
@@ -75,7 +71,6 @@ public class SqlIO extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
             db.beginTransaction();
-            //db.execSQL("DROP DATABASE IF EXISTS recetario");
             db.execSQL("DROP TABLE IF EXISTS favoritas");
             db.execSQL("DROP TABLE IF EXISTS receta");
             db.execSQL("DROP TABLE IF EXISTS usuario");
@@ -83,7 +78,6 @@ public class SqlIO extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
-
         this.onCreate(db);
     }
 
@@ -156,13 +150,13 @@ public class SqlIO extends SQLiteOpenHelper {
         image.setImageBitmap(bmp);*//*
     }*/
 
-    public void insertarReceta(Receta receta, String email) {
+    public void insertarReceta(Receta receta) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
-            db.execSQL("INSERT INTO receta(titulo,tiempo,dificultad,numComensales,ingredientes,elaboracion,autor,seccion,usuario_email) VALUES (?,?,?,?,?,?,?,?,?)",
+            db.execSQL("INSERT INTO receta(titulo,tiempo,dificultad,numComensales,ingredientes,elaboracion,seccion,usuario_email) VALUES (?,?,?,?,?,?,?,?)",
                     new String[]{receta.getTitulo(), Integer.toString(receta.getTiempo()), receta.getDificultad(), Integer.toString(receta.getNumComensales()),
-                            receta.getIngredientes(), receta.getElaboracion(), receta.getAutor(), receta.getSeccion(), email});
+                            receta.getIngredientes(), receta.getElaboracion(), receta.getSeccion(), receta.getAutor()});
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -238,6 +232,19 @@ public class SqlIO extends SQLiteOpenHelper {
         }finally {
             db.endTransaction();
         }
+    }
+
+    public void insertarFavorita(String idReceta, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL("INSERT INTO favoritas(receta_idReceta, usuario_email) VALUES(?,?)",
+                    new String[]{idReceta, email});
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        return;
     }
 
 }

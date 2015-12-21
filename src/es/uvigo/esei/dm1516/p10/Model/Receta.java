@@ -17,7 +17,7 @@ public class Receta {
 
     }
 
-    public Receta(int idReceta, String titulo, int tiempo, String dificultad, int numComensales, String ingredientes, String elaboracion, String autor, String seccion) {
+    public Receta(int idReceta, String titulo, int tiempo, String dificultad, int numComensales, String ingredientes, String elaboracion, String seccion, String autor) {
         this.idReceta = idReceta;
         this.titulo = titulo;
         this.tiempo = tiempo;

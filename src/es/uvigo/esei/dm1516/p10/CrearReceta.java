@@ -95,11 +95,10 @@ public class CrearReceta extends Activity {
                 String ingredientes = etIngredientes.getText().toString();
                 String elaboracion = etElaboracion.getText().toString();
                 String seccion = etSeccion.getText().toString();
-                String autor = Main.getCurrentUser().getNombre();
                 String email = Main.getCurrentUser().getEmail();
 
-                Receta receta = new Receta(0, titulo, tiempo, dificultad, numComensales, ingredientes, elaboracion, autor, seccion);
-                ((App) getApplication()).getDb().insertarReceta(receta, email);
+                Receta receta = new Receta(0, titulo, tiempo, dificultad, numComensales, ingredientes, elaboracion, seccion, email);
+                ((App) getApplication()).getDb().insertarReceta(receta);
 
                 CrearReceta.this.finish();
             }

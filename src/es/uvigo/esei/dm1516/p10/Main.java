@@ -29,12 +29,12 @@ public class Main extends Activity {
     }
 
     public void crearDatos() {
-        Receta rc1 = new Receta(0, "Tortilla francesa", 5, "Facil", 2, "Huevos", "Batir y freir", "Juan", "Primer plato");
-        Receta rc2 = new Receta(0, "Tortilla espa\u00f1ola", 6, "Facil", 2, "Huevos y patatas", "Batir, pelar y freir", "Rosa", "Primer plato");
-        Receta rc3 = new Receta(0, "Carne asada", 3, "Media", 5, "Carne", "Asar la carne", "Juan", "Segundo plato");
-        Receta rc4 = new Receta(0, "Pollo asado", 2, "Media", 4, "Pollo", "Asar el pollo", "Rosa", "Segundo plato");
-        Receta rc5 = new Receta(0, "Tarta de queso", 1, "Dificil", 2, "Queso y tarta", "Abrir la nevera", "Rosa", "Postre");
-        Receta rc6 = new Receta(0, "Tarta helada", 3, "Dificil", 3, "Tarta y hielo", "Abrir el congelador", "Juan", "Postre");
+        Receta rc1 = new Receta(0, "Tortilla francesa", 5, "Facil", 2, "Huevos", "Batir y freir", "Primer plato", "rosa@receta.es");
+        Receta rc2 = new Receta(0, "Tortilla espa\u00f1ola", 6, "Facil", 2, "Huevos y patatas", "Batir, pelar y freir", "Primer plato", "rosa@receta.es");
+        Receta rc3 = new Receta(0, "Carne asada", 3, "Media", 5, "Carne", "Asar la carne", "Segundo plato", "rosa@receta.es");
+        Receta rc4 = new Receta(0, "Pollo asado", 2, "Media", 4, "Pollo", "Asar el pollo", "Segundo plato", "rosa@receta.es");
+        Receta rc5 = new Receta(0, "Tarta de queso", 1, "Dificil", 2, "Queso y tarta", "Abrir la nevera", "Postre", "rosa@receta.es");
+        Receta rc6 = new Receta(0, "Tarta helada", 3, "Dificil", 3, "Tarta y hielo", "Abrir el congelador", "Postre", "rosa@receta.es");
 
         rc6.setIngredientes("Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per. In usu latine equidem dolores. Quo no falli viris intellegam, ut fugit veritus placerat per.");
         rc6.setElaboracion("Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per. In usu latine equidem dolores. Quo no falli viris intellegam, ut fugit veritus placerat per.");
@@ -50,22 +50,22 @@ public class Main extends Activity {
         }
 
         if (!((App) this.getApplication()).getDb().existeReceta(rc1.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc1, usr1.getEmail());
+            ((App) this.getApplication()).getDb().insertarReceta(rc1);
         }
         if (!((App) this.getApplication()).getDb().existeReceta(rc2.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc2, usr1.getEmail());
+            ((App) this.getApplication()).getDb().insertarReceta(rc2);
         }
         if (!((App) this.getApplication()).getDb().existeReceta(rc3.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc3, usr1.getEmail());
+            ((App) this.getApplication()).getDb().insertarReceta(rc3);
         }
         if (!((App) this.getApplication()).getDb().existeReceta(rc4.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc4, usr2.getEmail());
+            ((App) this.getApplication()).getDb().insertarReceta(rc4);
         }
         if (!((App) this.getApplication()).getDb().existeReceta(rc5.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc5, usr2.getEmail());
+            ((App) this.getApplication()).getDb().insertarReceta(rc5);
         }
         if (!((App) this.getApplication()).getDb().existeReceta(rc6.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc6, usr2.getEmail());
+            ((App) this.getApplication()).getDb().insertarReceta(rc6);
         }
     }
 
@@ -181,7 +181,7 @@ public class Main extends Activity {
         switch (menuItem.getItemId()) {
             case R.id.mainMenuItemOpt1:
                 try {
-                    new DataFetcher(this).execute(new URL("http://recetario.hol.es/select-receta.php"));
+                    new DataFetcher(this).execute(new URL("http://recetario.hol.es/selects.php"));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
@@ -198,7 +198,7 @@ public class Main extends Activity {
                 break;
             case R.id.mainMenu2ItemOpt1:
                 try {
-                    new DataFetcher(this).execute(new URL("http://recetario.hol.es/select-receta.php"));
+                    new DataFetcher(this).execute(new URL("http://recetario.hol.es/selects.php"));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
