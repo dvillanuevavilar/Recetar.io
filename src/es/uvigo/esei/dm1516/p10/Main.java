@@ -81,12 +81,6 @@ public class Main extends Activity {
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
         adapter = new AdaptadorSeccion(this, secciones);
         lista.setAdapter(adapter);
-
-        try {
-            new DataFetcher(this).execute(new URL("http://recetario.hol.es/select-receta.php"));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -186,6 +180,11 @@ public class Main extends Activity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.mainMenuItemOpt1:
+                try {
+                    new DataFetcher(this).execute(new URL("http://recetario.hol.es/select-receta.php"));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.mainMenuItemOpt2:
                 break;
@@ -198,6 +197,11 @@ public class Main extends Activity {
                 Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.mainMenu2ItemOpt1:
+                try {
+                    new DataFetcher(this).execute(new URL("http://recetario.hol.es/select-receta.php"));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.mainMenu2ItemOpt2:
                 //Intent de login
