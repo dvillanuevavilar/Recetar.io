@@ -227,4 +227,17 @@ public class SqlIO extends SQLiteOpenHelper {
         return;
     }
 
+    public void burnData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try{
+            db.execSQL("DELETE FROM favoritas");
+            db.execSQL("DELETE FROM receta");
+            db.execSQL("DELETE FROM usuario");
+            db.setTransactionSuccessful();
+        }finally {
+            db.endTransaction();
+        }
+    }
+
 }
