@@ -7,14 +7,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import es.uvigo.esei.dm1516.p10.Core.App;
+import es.uvigo.esei.dm1516.p10.Mapper.InsertsConnection;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Registro extends Activity {
 
     public boolean registrarUsuario(Usuario user) {
 
         if (!((App) this.getApplication()).getDb().existeUsuario(user.getEmail())) {
-            ((App) this.getApplication()).getDb().insertarUsuario(user);
+            //((App) this.getApplication()).getDb().insertarUsuario(user);
+
+            try {
+                new InsertsConnection("usuario",user).execute(new URL("http://recetario.hol.es/insert-user.php"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
             return true;
         } else {
             return false;
