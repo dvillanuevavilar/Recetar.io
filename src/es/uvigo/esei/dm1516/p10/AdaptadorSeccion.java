@@ -61,8 +61,9 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, "Seleccionado id "+ children.getIdReceta(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(activity, "Seleccionado id "+ children.getIdReceta(), Toast.LENGTH_SHORT).show();
                 Intent intentVerReceta = new Intent("intent.action.VIEWRECETA");
+                intentVerReceta.putExtra("idReceta", children.getIdReceta());
                 intentVerReceta.putExtra("titulo", children.getTitulo());
                 intentVerReceta.putExtra("tiempo", String.valueOf(children.getTiempo()));
                 intentVerReceta.putExtra("numComensales", String.valueOf(children.getNumComensales()));

@@ -34,7 +34,7 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
         this.email = email;
     }
 
-    //Constructor para insertar favorita
+    //Constructor para insertar o borrar favorita
     public InsertsConnection(String tipoInsercion, String email, int idReceta) {
         this.email = email;
         this.idReceta = idReceta;

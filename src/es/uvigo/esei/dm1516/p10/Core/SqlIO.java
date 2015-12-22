@@ -41,7 +41,7 @@ public class SqlIO extends SQLiteOpenHelper {
                     + "contrasenha string(20) NOT NULL"
                     + ")");
             db.execSQL("CREATE TABLE IF NOT EXISTS receta("
-                    + "idReceta INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + "idReceta INTEGER PRIMARY KEY,"
                     + "titulo string(50) NOT NULL,"
                     + "tiempo int NOT NULL,"
                     + "dificultad string(15) NOT NULL,"
@@ -55,7 +55,7 @@ public class SqlIO extends SQLiteOpenHelper {
                     + ")");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS favoritas("
-                    + "receta_idReceta string(10),"
+                    + "receta_idReceta INTEGER,"
                     + "usuario_email string(30),"
                     + "PRIMARY KEY(receta_idReceta, usuario_email),"
                     + "FOREIGN KEY(receta_idReceta) REFERENCES receta(idReceta)"
@@ -154,8 +154,8 @@ public class SqlIO extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
-            db.execSQL("INSERT INTO receta(titulo,tiempo,dificultad,numComensales,ingredientes,elaboracion,seccion,usuario_email) VALUES (?,?,?,?,?,?,?,?)",
-                    new String[]{receta.getTitulo(), Integer.toString(receta.getTiempo()), receta.getDificultad(), Integer.toString(receta.getNumComensales()),
+            db.execSQL("INSERT INTO receta(idReceta,titulo,tiempo,dificultad,numComensales,ingredientes,elaboracion,seccion,usuario_email) VALUES (?,?,?,?,?,?,?,?,?)",
+                    new String[]{Integer.toString(receta.getIdReceta()),receta.getTitulo(), Integer.toString(receta.getTiempo()), receta.getDificultad(), Integer.toString(receta.getNumComensales()),
                             receta.getIngredientes(), receta.getElaboracion(), receta.getSeccion(), receta.getAutor()});
             db.setTransactionSuccessful();
         } finally {
@@ -184,7 +184,7 @@ public class SqlIO extends SQLiteOpenHelper {
             return false;
     }
 
-    public String obtenerNombre(String email){
+    public String obtenerNombre(String email) {
         String nombre = null;
         Cursor cursor = this.getReadableDatabase().rawQuery("SELECT nombre FROM usuario where email=?",
                 new String[]{email});
@@ -208,28 +208,30 @@ public class SqlIO extends SQLiteOpenHelper {
         return;
     }
 
-    public void marcarFavorita(String email, int idReceta) {
+    public Boolean comprobarFavorita(String email, int idReceta) {
+        Cursor cursor = this.getReadableDatabase().rawQuery("SELECT count(*) FROM favoritas where usuario_email=? and receta_idReceta=?",
+                new String[]{email, Integer.toString(idReceta)});
+
+        if (cursor.moveToFirst()) {
+            if (cursor.getInt(0) >0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public void burnData() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
-            db.execSQL("INSERT INTO favoritas(receta_idReceta, usuario_email ) VALUES(?,?)",
-                    new String[]{Integer.toString(idReceta), email});
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-        return;
-    }
-
-    public void burnData(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
-        try{
-                db.execSQL("DELETE FROM favoritas");
+            db.execSQL("DELETE FROM favoritas");
             db.execSQL("DELETE FROM receta");
             db.execSQL("DELETE FROM usuario");
             db.setTransactionSuccessful();
-        }finally {
+        } finally {
             db.endTransaction();
         }
     }

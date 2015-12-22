@@ -124,7 +124,7 @@ public class Main extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-
+        Main.this.updateStatus();
         adapter.notifyDataSetChanged();
     }
 

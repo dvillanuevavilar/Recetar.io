@@ -31,13 +31,12 @@
                         android:orientation="vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:layout_weight="1">
-                    <RatingBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/ratingBar"
-                            android:numStars="1"
-                            android:layout_above="@+id/tvTiempo" android:layout_alignStart="@+id/tvDificultad"
-                            android:layout_gravity="right" android:rating="0"/>
+                    <ToggleButton
+                            android:layout_width="38dp"
+                            android:layout_height="35dp"
+                            android:id="@+id/btnFav" android:layout_gravity="right"
+                            android:background="@android:drawable/btn_star" android:textOff=" " android:textOn=" "
+                            android:checked="false"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
