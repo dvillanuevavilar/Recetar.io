@@ -19,6 +19,7 @@ import java.util.Calendar;
 import static es.uvigo.esei.dm1516.p10.Main.*;
 
 public class CrearReceta extends Activity {
+
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -119,7 +120,7 @@ public class CrearReceta extends Activity {
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
-
+                    CrearReceta.this.setResult(-100);
                     CrearReceta.this.finish();
                 } else {
                     Toast.makeText(CrearReceta.this, "No puede haber campos vacios", Toast.LENGTH_SHORT).show();

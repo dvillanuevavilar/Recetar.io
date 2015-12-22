@@ -26,7 +26,7 @@ public class Main extends Activity {
     private AdaptadorSeccion adapter;
     private static Usuario currentUser;
 
-    public static Usuario getCurrentUser(){
+    public static Usuario getCurrentUser() {
         return currentUser;
     }
 
@@ -71,15 +71,29 @@ public class Main extends Activity {
         }
     }
 
-    public boolean estadoConexion(){
+    public boolean estadoConexion() {
 
         ConnectivityManager connMgr = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if(networkInfo !=null && networkInfo.isConnected()){
+        if (networkInfo != null && networkInfo.isConnected()) {
             return true;
-        }else{
+        } else {
             return false;
         }
+    }
+
+    public void updateStatus() {
+
+        if (estadoConexion()) {
+            try {
+                new DataFetcher(Main.this).execute(new URL("http://recetario.hol.es/selects.php"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -102,6 +116,9 @@ public class Main extends Activity {
         if ((resultCode == RESULT_OK) && (requestCode == REQUEST_CODE)) {
             currentUser = new Usuario(data.getExtras().getString("email"), data.getExtras().getString("nombre"), data.getExtras().getString("pass"));
         }
+        if ((requestCode == REQUEST_CODE) && (resultCode == -100)) {
+            Main.this.updateStatus();
+        }
     }
 
     @Override
@@ -118,16 +135,16 @@ public class Main extends Activity {
         SharedPreferences usuario = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = usuario.edit();
         //Si el usuario no ciera sesión lo almacenamos
-        if(currentUser!=null) {
+        if (currentUser != null) {
             editor.clear();
-            editor.putBoolean("estado",true);
+            editor.putBoolean("estado", true);
             editor.putString("email", currentUser.getEmail());
             editor.putString("contrasenha", currentUser.getContrasenha());
             editor.putString("nombre", currentUser.getNombre());
             editor.apply();
-        }else{
+        } else {
             editor.clear();
-            editor.putBoolean("estado",false);
+            editor.putBoolean("estado", false);
             editor.apply();
         }
     }
@@ -157,24 +174,24 @@ public class Main extends Activity {
 
         //Cargamos usuario si existe
         SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
-        Boolean estado = prefs.getBoolean("estado",false);
-        if(estado==true){
-            String email = prefs.getString("email","");
-            String nombre = prefs.getString("nombre","");
-            String contrasenha = prefs.getString("contrasenha","");
-            currentUser = new Usuario(email,nombre,contrasenha);
+        Boolean estado = prefs.getBoolean("estado", false);
+        if (estado == true) {
+            String email = prefs.getString("email", "");
+            String nombre = prefs.getString("nombre", "");
+            String contrasenha = prefs.getString("contrasenha", "");
+            currentUser = new Usuario(email, nombre, contrasenha);
         }
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu){
+    public boolean onPrepareOptionsMenu(Menu menu) {
         //menu.clear();
         if (currentUser != null) {
             menu.setGroupEnabled(R.id.grupo2, false);
             menu.setGroupVisible(R.id.grupo2, false);
             menu.setGroupEnabled(R.id.grupo1, true);
             menu.setGroupVisible(R.id.grupo1, true);
-        }else{
+        } else {
             menu.setGroupEnabled(R.id.grupo1, false);
             menu.setGroupVisible(R.id.grupo1, false);
             menu.setGroupEnabled(R.id.grupo2, true);
@@ -194,43 +211,42 @@ public class Main extends Activity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.mainMenuItemOpt1:
-                try {
-                    new DataFetcher(this).execute(new URL("http://recetario.hol.es/selects.php"));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+                //Sincronizar
+                Main.this.updateStatus();
                 break;
             case R.id.mainMenuItemOpt2:
+                //Favoritos
                 break;
             case R.id.mainMenuItemOpt3:
-                if(estadoConexion()){
+                //Crear receta
+                if (estadoConexion()) {
                     Intent intentCrearReceta = new Intent(Main.this, CrearReceta.class);
-                    Main.this.startActivity(intentCrearReceta);
-                }else{
+                    Main.this.startActivityForResult(intentCrearReceta, REQUEST_CODE);
+                } else {
                     Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.mainMenuItemOpt4:
+                //Cerrar sesion
                 currentUser = null;
                 Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.mainMenu2ItemOpt1:
-                try {
-                    new DataFetcher(this).execute(new URL("http://recetario.hol.es/selects.php"));
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+                //Sincronizar
+                Main.this.updateStatus();
                 break;
             case R.id.mainMenu2ItemOpt2:
                 //Intent de login
+                Main.this.updateStatus();
                 Intent intentLogin2 = new Intent(Main.this, Login.class);
                 Main.this.startActivityForResult(intentLogin2, REQUEST_CODE);
                 break;
             case R.id.mainMenu2ItemOpt3:
-                if(estadoConexion()){
+                //Registro
+                if (estadoConexion()) {
                     Intent intentRegistro = new Intent(Main.this, Registro.class);
-                    Main.this.startActivity(intentRegistro);
-                }else{
+                    Main.this.startActivityForResult(intentRegistro, REQUEST_CODE);
+                } else {
                     Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
                 }
                 break;
