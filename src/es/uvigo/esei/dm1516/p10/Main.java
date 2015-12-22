@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class Main extends Activity {
-    private static final int REQUEST_CODE = 0;
+    private static final int REQUEST_CODE = 1;
     private SparseArray<GrupoDeItems> secciones;
     private AdaptadorSeccion adapter;
     private static Usuario currentUser;
@@ -124,7 +124,6 @@ public class Main extends Activity {
     @Override
     public void onResume() {
         super.onResume();
-        Main.this.updateStatus();
         adapter.notifyDataSetChanged();
     }
 

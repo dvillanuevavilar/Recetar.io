@@ -1,6 +1,7 @@
 package es.uvigo.esei.dm1516.p10;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Window;
@@ -73,6 +74,7 @@ public class VerReceta extends Activity {
             }
         });
 
+        this.setResult(-100);
 
     }
 

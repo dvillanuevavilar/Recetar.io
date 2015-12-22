@@ -16,6 +16,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
     private final SparseArray<GrupoDeItems> grupos;
     public LayoutInflater inflater;
     public Activity activity;
+    private static final int REQUEST_CODE=1;
 
     // Constructor
     public AdaptadorSeccion(Activity act, SparseArray<GrupoDeItems> grupos) {
@@ -71,7 +72,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
                 intentVerReceta.putExtra("autor", nombreAutor);
                 intentVerReceta.putExtra("ingredientes", children.getIngredientes());
                 intentVerReceta.putExtra("elaboracion", children.getElaboracion());
-                activity.startActivity(intentVerReceta);
+                activity.startActivityForResult(intentVerReceta,REQUEST_CODE);
             }
         });
         return convertView;
