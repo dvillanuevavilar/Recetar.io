@@ -11,7 +11,7 @@
     <string name="app_Login">Login</string>
     <string name="app_CrearReceta">Nueva receta</string>
     <string name="app_VerReceta">Receta</string>
-    <string name="favoritos">Favoritos</string>
+    <string name="favoritos">Ver favoritas/todas</string>
     <string name="cerrar_sesion">Cerrar sesión</string>
     <string name="min">min</string>
     <string name="ingredientes">Ingredientes</string>

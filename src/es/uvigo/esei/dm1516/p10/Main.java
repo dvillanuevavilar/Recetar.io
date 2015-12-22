@@ -25,6 +25,7 @@ public class Main extends Activity {
     private SparseArray<GrupoDeItems> secciones;
     private AdaptadorSeccion adapter;
     private static Usuario currentUser;
+    private boolean mostrarFav = false;
 
     public static Usuario getCurrentUser() {
         return currentUser;
@@ -157,6 +158,9 @@ public class Main extends Activity {
 
 
         ArrayList<Receta> recetas = ((App) this.getApplication()).getDb().listarRecetas();
+        if(mostrarFav){
+            recetas = ((App) this.getApplication()).getDb().listarRecetasFavoritas(currentUser.getEmail());
+        }
         for (Receta r : recetas) {
             if (r.getSeccion().equals("Primer plato")) {
                 primeros.add(r);
@@ -215,6 +219,8 @@ public class Main extends Activity {
                 break;
             case R.id.mainMenuItemOpt2:
                 //Favoritos
+                mostrarFav=!mostrarFav;
+                Main.this.onStart();
                 break;
             case R.id.mainMenuItemOpt3:
                 //Crear receta
