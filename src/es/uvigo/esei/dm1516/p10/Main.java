@@ -234,6 +234,9 @@ public class Main extends Activity {
             case R.id.mainMenuItemOpt4:
                 //Cerrar sesion
                 currentUser = null;
+                mostrarFav=false;
+                onStop();
+                onStart();
                 Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.mainMenu2ItemOpt1:
