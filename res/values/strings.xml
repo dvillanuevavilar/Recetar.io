@@ -27,4 +27,7 @@
     <string name="segundoplato">Segundo plato</string>
     <string name="postre">Postre</string>
     <string name="app_sinc">Sincronizar</string>
+    <string name="selImg">Imagen</string>
+    <string name="camara">Cámara</string>
+    <string name="galeria">Galería</string>
 </resources>

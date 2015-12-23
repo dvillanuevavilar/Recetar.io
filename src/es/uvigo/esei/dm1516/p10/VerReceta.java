@@ -1,8 +1,11 @@
 package es.uvigo.esei.dm1516.p10;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.*;
@@ -62,11 +65,18 @@ public class VerReceta extends Activity {
 
                 if(Main.getCurrentUser()!=null){
                     String emailActual=Main.getCurrentUser().getEmail();
-                    try {
-                        new InsertsConnection("favorita",emailActual,idReceta).execute(new URL("http://recetario.hol.es/insert-fav.php"));
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
+                        ConnectivityManager connMgr = (ConnectivityManager) VerReceta.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                        if (networkInfo != null && networkInfo.isConnected()) {
+                            try {
+                                new InsertsConnection("favorita", emailActual, idReceta).execute(new URL("http://recetario.hol.es/insert-fav.php"));
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
+                        }else{
+                            Toast.makeText(VerReceta.this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                            btnFav.setChecked(false);
+                        }
                 }else{
                     Toast.makeText(VerReceta.this, "Necesitas estar logueado", Toast.LENGTH_SHORT).show();
                     btnFav.setChecked(false);

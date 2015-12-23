@@ -3,7 +3,14 @@ package es.uvigo.esei.dm1516.p10;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -12,13 +19,20 @@ import es.uvigo.esei.dm1516.p10.Core.App;
 import es.uvigo.esei.dm1516.p10.Mapper.InsertsConnection;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 
+import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Blob;
 import java.util.Calendar;
 
 import static es.uvigo.esei.dm1516.p10.Main.*;
 
 public class CrearReceta extends Activity {
+    private static int TAKE_PICTURE = 1;
+    private static int SELECT_PICTURE = 2;
+    private String name = "";
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -88,6 +102,28 @@ public class CrearReceta extends Activity {
             }
         });
 
+        //Imagen
+
+        name = Environment.getExternalStorageDirectory() + "/test.jpg";
+        Button btnGal = (Button) CrearReceta.this.findViewById(R.id.idImgGal);
+        Button btnCam = (Button) CrearReceta.this.findViewById(R.id.idImgCam);
+
+        btnCam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, TAKE_PICTURE);
+            }
+        });
+
+        btnGal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+                startActivityForResult(intent, SELECT_PICTURE);
+            }
+        });
+
         /* Crear receta */
         btGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,5 +163,29 @@ public class CrearReceta extends Activity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == TAKE_PICTURE) {
+            if (data != null) {
+                ImageView iv = (ImageView) CrearReceta.this.findViewById(R.id.idImgView);
+                iv.setImageBitmap((Bitmap) data.getParcelableExtra("data"));
+            }
+        } else if (requestCode == SELECT_PICTURE) {
+            ImageView iv = (ImageView) CrearReceta.this.findViewById(R.id.idImgView);
+            if(data !=null) {
+                Uri selectedImage = data.getData();
+                InputStream is;
+                try {
+                    is = getContentResolver().openInputStream(selectedImage);
+                    BufferedInputStream bis = new BufferedInputStream(is);
+                    Bitmap bitmap = BitmapFactory.decodeStream(bis);
+                    iv.setImageBitmap(bitmap);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

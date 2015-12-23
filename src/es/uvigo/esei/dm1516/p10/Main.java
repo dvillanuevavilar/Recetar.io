@@ -109,6 +109,9 @@ public class Main extends Activity {
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
         adapter = new AdaptadorSeccion(this, secciones);
         lista.setAdapter(adapter);
+
+        Main.this.updateStatus();
+
     }
 
     @Override

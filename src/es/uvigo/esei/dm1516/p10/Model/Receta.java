@@ -2,6 +2,8 @@ package es.uvigo.esei.dm1516.p10.Model;
 
 import android.text.format.Time;
 
+import java.sql.Blob;
+
 public class Receta {
     private int idReceta;
     private String titulo;
