@@ -28,7 +28,7 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
     }
 
     //Constructor para insertar receta
-    public InsertsConnection(String tipoInsercion, Receta receta, String email) {
+    public InsertsConnection(String tipoInsercion, Receta receta) {
         this.tipoInsercion = tipoInsercion;
         this.receta = receta;
         this.email = email;
@@ -65,7 +65,8 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
                         "&elaboracion=" +URLEncoder.encode(receta.getElaboracion(), "utf-8") +
                         "&seccion=" + URLEncoder.encode(receta.getSeccion(), "utf-8") +
                         "&fecha=" + URLEncoder.encode("0000-00-00", "utf-8") +
-                        "&usuario_email=" + URLEncoder.encode(email, "utf-8");
+                        "&usuario_email=" + URLEncoder.encode(receta.getAutor(), "utf-8") +
+                        "&imagen=" + URLEncoder.encode(receta.getImagen(),"utf-8");
             } else if(tipoInsercion == "favorita"){
                 data = "receta_idReceta=" + URLEncoder.encode(Integer.toString(idReceta), "utf-8") +
                         "&usuario_email=" + URLEncoder.encode(email, "utf-8");

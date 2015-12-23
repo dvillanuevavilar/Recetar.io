@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +21,7 @@ import es.uvigo.esei.dm1516.p10.Mapper.InsertsConnection;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -32,7 +34,7 @@ import static es.uvigo.esei.dm1516.p10.Main.*;
 public class CrearReceta extends Activity {
     private static int TAKE_PICTURE = 1;
     private static int SELECT_PICTURE = 2;
-    private String name = "";
+    private Bitmap imagen;
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -104,7 +106,6 @@ public class CrearReceta extends Activity {
 
         //Imagen
 
-        name = Environment.getExternalStorageDirectory() + "/test.jpg";
         Button btnGal = (Button) CrearReceta.this.findViewById(R.id.idImgGal);
         Button btnCam = (Button) CrearReceta.this.findViewById(R.id.idImgCam);
 
@@ -143,16 +144,17 @@ public class CrearReceta extends Activity {
                 String seccion = etSeccion.getText().toString();
                 String email = Main.getCurrentUser().getEmail();
 
-                Receta receta = new Receta(0, titulo, tiempo, dificultad, numComensales, ingredientes, elaboracion, seccion, email);
+                Receta receta = new Receta(0, titulo, tiempo, dificultad, numComensales, ingredientes, elaboracion, seccion, email, BitMapToString(imagen));
 
                 if (receta.getTitulo().length() > 0 && receta.getSeccion().length() > 0 && receta.getDificultad().length() > 0
                         && receta.getIngredientes().length() > 0 && receta.getElaboracion().length() > 0
                         && Integer.toString(receta.getTiempo()).length() > 0 && receta.getTiempo() > 0
-                        && Integer.toString(receta.getNumComensales()).length() > 0 && receta.getNumComensales() > 0) {
+                        && Integer.toString(receta.getNumComensales()).length() > 0 && receta.getNumComensales() > 0
+                        && receta.getImagen().length()>0) {
 
                     //((App) getApplication()).getDb().insertarReceta(receta, email);
                     try {
-                        new InsertsConnection("receta", receta, email).execute(new URL("http://recetario.hol.es/insert-receta.php"));
+                        new InsertsConnection("receta", receta).execute(new URL("http://recetario.hol.es/insert-receta.php"));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
@@ -171,6 +173,7 @@ public class CrearReceta extends Activity {
             if (data != null) {
                 ImageView iv = (ImageView) CrearReceta.this.findViewById(R.id.idImgView);
                 iv.setImageBitmap((Bitmap) data.getParcelableExtra("data"));
+                imagen=(Bitmap) data.getParcelableExtra("data");
             }
         } else if (requestCode == SELECT_PICTURE) {
             ImageView iv = (ImageView) CrearReceta.this.findViewById(R.id.idImgView);
@@ -182,10 +185,23 @@ public class CrearReceta extends Activity {
                     BufferedInputStream bis = new BufferedInputStream(is);
                     Bitmap bitmap = BitmapFactory.decodeStream(bis);
                     iv.setImageBitmap(bitmap);
+                    imagen=bitmap;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    public String BitMapToString(Bitmap bitmap) {
+        if(bitmap!=null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            byte[] b = baos.toByteArray();
+            String temp = Base64.encodeToString(b, Base64.DEFAULT);
+            return temp;
+        }else{
+            return "error de imagen";
         }
     }
 }

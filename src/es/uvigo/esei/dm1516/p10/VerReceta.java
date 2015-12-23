@@ -3,10 +3,14 @@ package es.uvigo.esei.dm1516.p10;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Window;
 import android.widget.*;
 import es.uvigo.esei.dm1516.p10.Core.App;
@@ -31,6 +35,7 @@ public class VerReceta extends Activity {
         TextView tvIngredientes = (TextView) this.findViewById(R.id.tvIngredientes);
         TextView tvElaboracion = (TextView) this.findViewById(R.id.tvElaboracion);
         ToggleButton btnFav = (ToggleButton) this.findViewById(R.id.btnFav);
+        ImageView imageView = (ImageView) this.findViewById(R.id.idImgVista);
 
         String titulo = (String) this.getIntent().getExtras().get("titulo");
         String tiempo = (String) this.getIntent().getExtras().get("tiempo");
@@ -40,6 +45,7 @@ public class VerReceta extends Activity {
         String ingredientes = (String) this.getIntent().getExtras().get("ingredientes");
         String elaboracion = (String) this.getIntent().getExtras().get("elaboracion");
         int idReceta = (Integer) this.getIntent().getExtras().get("idReceta");
+        String imagen = ((App)getApplication()).getDb().imagenPorReceta(idReceta);
 
 
 
@@ -58,6 +64,7 @@ public class VerReceta extends Activity {
         tvAutor.setText(autor);
         tvIngredientes.setText(ingredientes);
         tvElaboracion.setText(elaboracion);
+        imageView.setImageBitmap(StringToBitMap(imagen));
 
         btnFav.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -86,6 +93,18 @@ public class VerReceta extends Activity {
 
         this.setResult(-100);
 
+    }
+
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+                    encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
 }

@@ -40,8 +40,8 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
 
         try {
             HttpURLConnection conn = (HttpURLConnection) url[0].openConnection();
-            conn.setReadTimeout(1500);
-            conn.setConnectTimeout(1500);
+            conn.setReadTimeout(2500);
+            conn.setConnectTimeout(2500);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
 
@@ -76,7 +76,8 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
                         obj.getString("ingredientes"),
                         obj.getString("elaboracion"),
                         obj.getString("seccion"),
-                        obj.getString("usuario_email"));
+                        obj.getString("usuario_email"),
+                        obj.getString("imagen"));
                 mydb.insertarReceta(receta);
             }
 

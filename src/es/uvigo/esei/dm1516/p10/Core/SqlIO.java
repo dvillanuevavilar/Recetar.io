@@ -49,8 +49,8 @@ public class SqlIO extends SQLiteOpenHelper {
                     + "ingredientes text NOT NULL,"
                     + "elaboracion text NOT  NULL,"
                     + "seccion string(20) NOT NULL,"
-                    //+ "imagen blob,"
                     + "usuario_email string(30) NOT NULL,"
+                    + "imagen longtext,"
                     + "FOREIGN KEY(usuario_email) REFERENCES usuario(email)"
                     + ")");
 
@@ -97,7 +97,7 @@ public class SqlIO extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 lista.add(new Receta(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3),
-                        cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8)));
+                        cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9)));
             } while (cursor.moveToNext());
         }
 
@@ -111,52 +111,32 @@ public class SqlIO extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 lista.add(new Receta(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3),
-                        cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8)));
+                        cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9)));
             } while (cursor.moveToNext());
         }
 
         return lista;
     }
 
-    public Receta findRecetaById(String id) {
-        Receta receta = null;
+    public String imagenPorReceta(int idReceta) {
         SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM receta WHERE idReceta = ?",
-                new String[]{id});
+        String img="no hay";
+        Cursor cursor = db.rawQuery("SELECT imagen FROM receta WHERE idReceta = ?",
+                new String[]{Integer.toString(idReceta)});
 
         if (cursor.moveToFirst()) {
-            receta = new Receta(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3),
-                    cursor.getInt(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8));
+            img = cursor.getString(0);
         }
-        return receta;
+        return img;
     }
-
-    /*public byte[] imagenPorIdReceta(String id){
-        byte[] imagen = null;
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT imagen FROM receta WHERE idReceta = ?",
-                new String[]{id});
-
-        if(cursor.moveToFirst()){
-            imagen = cursor.getBlob(0);
-        }
-        return imagen;
-        *//*Para luego recuperar la imagen
-        byte[] blob=c.getBlob("yourcolumnname");
-        Bitmap bmp=BitmapFactory.decodeByteArray(blob,0,blob.length);
-        ImageView image=new ImageView(this);
-        image.setImageBitmap(bmp);*//*
-    }*/
 
     public void insertarReceta(Receta receta) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
-            db.execSQL("INSERT INTO receta(idReceta,titulo,tiempo,dificultad,numComensales,ingredientes,elaboracion,seccion,usuario_email) VALUES (?,?,?,?,?,?,?,?,?)",
+            db.execSQL("INSERT INTO receta(idReceta,titulo,tiempo,dificultad,numComensales,ingredientes,elaboracion,seccion,usuario_email,imagen) VALUES (?,?,?,?,?,?,?,?,?,?)",
                     new String[]{Integer.toString(receta.getIdReceta()),receta.getTitulo(), Integer.toString(receta.getTiempo()), receta.getDificultad(), Integer.toString(receta.getNumComensales()),
-                            receta.getIngredientes(), receta.getElaboracion(), receta.getSeccion(), receta.getAutor()});
+                            receta.getIngredientes(), receta.getElaboracion(), receta.getSeccion(), receta.getAutor(), receta.getImagen()});
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

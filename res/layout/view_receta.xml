@@ -188,8 +188,7 @@
                 <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="319dp"
-                        android:id="@+id/imageView2"
-                        android:src="@drawable/tartaexample"
+                        android:id="@+id/idImgVista"
                         android:layout_alignParentBottom="true" android:layout_centerHorizontal="true"/>
             </LinearLayout>
         </LinearLayout>

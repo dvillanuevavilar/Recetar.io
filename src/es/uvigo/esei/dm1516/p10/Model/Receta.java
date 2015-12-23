@@ -14,6 +14,7 @@ public class Receta {
     private String elaboracion;
     private String autor;
     private String seccion;
+    private String imagen;
 
     public Receta(){
 
@@ -29,6 +30,19 @@ public class Receta {
         this.elaboracion = elaboracion;
         this.autor = autor;
         this.seccion = seccion;
+    }
+
+    public Receta(int idReceta, String titulo, int tiempo, String dificultad, int numComensales, String ingredientes, String elaboracion, String seccion, String autor, String imagen) {
+        this.idReceta = idReceta;
+        this.titulo = titulo;
+        this.tiempo = tiempo;
+        this.dificultad = dificultad;
+        this.numComensales = numComensales;
+        this.ingredientes = ingredientes;
+        this.elaboracion = elaboracion;
+        this.autor = autor;
+        this.seccion = seccion;
+        this.imagen = imagen;
     }
 
     public int getIdReceta() {
@@ -101,5 +115,13 @@ public class Receta {
 
     public void setSeccion(String seccion) {
         this.seccion = seccion;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }
