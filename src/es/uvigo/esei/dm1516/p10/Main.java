@@ -31,49 +31,7 @@ public class Main extends Activity {
         return currentUser;
     }
 
-    public void crearDatos() {
-        Receta rc1 = new Receta(0, "Tortilla francesa", 5, "Facil", 2, "Huevos", "Batir y freir", "Primer plato", "rosa@receta.es");
-        Receta rc2 = new Receta(0, "Tortilla espa\u00f1ola", 6, "Facil", 2, "Huevos y patatas", "Batir, pelar y freir", "Primer plato", "rosa@receta.es");
-        Receta rc3 = new Receta(0, "Carne asada", 3, "Media", 5, "Carne", "Asar la carne", "Segundo plato", "rosa@receta.es");
-        Receta rc4 = new Receta(0, "Pollo asado", 2, "Media", 4, "Pollo", "Asar el pollo", "Segundo plato", "rosa@receta.es");
-        Receta rc5 = new Receta(0, "Tarta de queso", 1, "Dificil", 2, "Queso y tarta", "Abrir la nevera", "Postre", "rosa@receta.es");
-        Receta rc6 = new Receta(0, "Tarta helada", 3, "Dificil", 3, "Tarta y hielo", "Abrir el congelador", "Postre", "rosa@receta.es");
-
-        rc6.setIngredientes("Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per. In usu latine equidem dolores. Quo no falli viris intellegam, ut fugit veritus placerat per.");
-        rc6.setElaboracion("Lorem ipsum ad his scripta blandit partiendo, eum fastidii accumsan euripidis in, eum liber hendrerit an. Qui ut wisi vocibus suscipiantur, quo dicit ridens inciderint id. Quo mundi lobortis reformidans eu, legimus senserit definiebas an eos. Eu sit tincidunt incorrupte definitionem, vis mutat affert percipit cu, eirmod consectetuer signiferumque eu per. In usu latine equidem dolores. Quo no falli viris intellegam, ut fugit veritus placerat per.");
-
-        Usuario usr1 = new Usuario("juan@receta.es", "Juan Rodr�guez", "abc123.");
-        Usuario usr2 = new Usuario("rosa@receta.es", "Rosa Lois", "abc123.");
-
-        if (!((App) this.getApplication()).getDb().existeUsuario(usr1.getEmail())) {
-            ((App) this.getApplication()).getDb().insertarUsuario(usr1);
-        }
-        if (!((App) this.getApplication()).getDb().existeUsuario(usr2.getEmail())) {
-            ((App) this.getApplication()).getDb().insertarUsuario(usr2);
-        }
-
-        if (!((App) this.getApplication()).getDb().existeReceta(rc1.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc1);
-        }
-        if (!((App) this.getApplication()).getDb().existeReceta(rc2.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc2);
-        }
-        if (!((App) this.getApplication()).getDb().existeReceta(rc3.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc3);
-        }
-        if (!((App) this.getApplication()).getDb().existeReceta(rc4.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc4);
-        }
-        if (!((App) this.getApplication()).getDb().existeReceta(rc5.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc5);
-        }
-        if (!((App) this.getApplication()).getDb().existeReceta(rc6.getIdReceta())) {
-            ((App) this.getApplication()).getDb().insertarReceta(rc6);
-        }
-    }
-
     public boolean estadoConexion() {
-
         ConnectivityManager connMgr = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -84,7 +42,6 @@ public class Main extends Activity {
     }
 
     public void updateStatus() {
-
         if (estadoConexion()) {
             try {
                 new DataFetcher(Main.this).execute(new URL("http://recetario.hol.es/selects.php"));
@@ -94,7 +51,6 @@ public class Main extends Activity {
         } else {
             Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -104,7 +60,6 @@ public class Main extends Activity {
         setContentView(R.layout.main);
 
         secciones = new SparseArray<GrupoDeItems>();
-        //crearDatos();
 
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
         adapter = new AdaptadorSeccion(this, secciones);
@@ -161,7 +116,7 @@ public class Main extends Activity {
 
 
         ArrayList<Receta> recetas = ((App) this.getApplication()).getDb().listarRecetas();
-        if(mostrarFav){
+        if (mostrarFav) {
             recetas = ((App) this.getApplication()).getDb().listarRecetasFavoritas(currentUser.getEmail());
         }
         for (Receta r : recetas) {
@@ -222,7 +177,7 @@ public class Main extends Activity {
                 break;
             case R.id.mainMenuItemOpt2:
                 //Favoritos
-                mostrarFav=!mostrarFav;
+                mostrarFav = !mostrarFav;
                 Main.this.onStart();
                 break;
             case R.id.mainMenuItemOpt3:
@@ -237,7 +192,7 @@ public class Main extends Activity {
             case R.id.mainMenuItemOpt4:
                 //Cerrar sesion
                 currentUser = null;
-                mostrarFav=false;
+                mostrarFav = false;
                 onStop();
                 onStart();
                 Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show();

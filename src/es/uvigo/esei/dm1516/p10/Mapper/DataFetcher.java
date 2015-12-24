@@ -59,7 +59,7 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
             Usuario usuario;
             for (int i = 0; i < jsonArray_users.length(); i++) {
                 JSONObject obj = jsonArray_users.getJSONObject(i);
-                usuario = new Usuario(obj.getString("email"), obj.getString("nombre"), obj.getString("contrasenha"));
+                usuario = new Usuario(obj.getString("email"), obj.getString("nombre"), null);
                 mydb.insertarUsuario(usuario);
             }
 

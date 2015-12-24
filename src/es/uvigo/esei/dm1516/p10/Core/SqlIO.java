@@ -37,8 +37,7 @@ public class SqlIO extends SQLiteOpenHelper {
         try {
             db.execSQL("CREATE TABLE IF NOT EXISTS usuario("
                     + "email string(30) PRIMARY KEY,"
-                    + "nombre string(45) NOT NULL,"
-                    + "contrasenha string(20) NOT NULL"
+                    + "nombre string(45) NOT NULL"
                     + ")");
             db.execSQL("CREATE TABLE IF NOT EXISTS receta("
                     + "idReceta INTEGER PRIMARY KEY,"
@@ -81,15 +80,67 @@ public class SqlIO extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public boolean existeReceta(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM receta WHERE idReceta=?",
-                new String[]{Integer.toString(id)});
-        if (cursor.moveToFirst()) {
-            return true;
-        } else
-            return false;
+    public void burnData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL("DELETE FROM favoritas");
+            db.execSQL("DELETE FROM receta");
+            db.execSQL("DELETE FROM usuario");
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
+
+    /**
+     * INSERTS
+     */
+
+    public void insertarReceta(Receta receta) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL("INSERT INTO receta(idReceta,titulo,tiempo,dificultad,numComensales,ingredientes,elaboracion,seccion,usuario_email,imagen) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                    new String[]{Integer.toString(receta.getIdReceta()), receta.getTitulo(), Integer.toString(receta.getTiempo()), receta.getDificultad(), Integer.toString(receta.getNumComensales()),
+                            receta.getIngredientes(), receta.getElaboracion(), receta.getSeccion(), receta.getAutor(), receta.getImagen()});
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        return;
+    }
+
+    public void insertarUsuario(Usuario user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL("INSERT INTO usuario(email, nombre) VALUES(?,?)",
+                    new String[]{user.getEmail(), user.getNombre()});
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        return;
+    }
+
+    public void insertarFavorita(String idReceta, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.execSQL("INSERT INTO favoritas(receta_idReceta, usuario_email) VALUES(?,?)",
+                    new String[]{idReceta, email});
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+        return;
+    }
+
+
+    /**
+     * Queries: RECETA
+     */
 
     public ArrayList<Receta> listarRecetas() {
         ArrayList<Receta> lista = new ArrayList<>();
@@ -120,7 +171,7 @@ public class SqlIO extends SQLiteOpenHelper {
 
     public String imagenPorReceta(int idReceta) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String img="no hay";
+        String img = "no hay";
         Cursor cursor = db.rawQuery("SELECT imagen FROM receta WHERE idReceta = ?",
                 new String[]{Integer.toString(idReceta)});
 
@@ -130,34 +181,15 @@ public class SqlIO extends SQLiteOpenHelper {
         return img;
     }
 
-    public void insertarReceta(Receta receta) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL("INSERT INTO receta(idReceta,titulo,tiempo,dificultad,numComensales,ingredientes,elaboracion,seccion,usuario_email,imagen) VALUES (?,?,?,?,?,?,?,?,?,?)",
-                    new String[]{Integer.toString(receta.getIdReceta()),receta.getTitulo(), Integer.toString(receta.getTiempo()), receta.getDificultad(), Integer.toString(receta.getNumComensales()),
-                            receta.getIngredientes(), receta.getElaboracion(), receta.getSeccion(), receta.getAutor(), receta.getImagen()});
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-        return;
-    }
+
+    /**
+     * Queries: USUARIO
+     */
 
     public boolean existeUsuario(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM usuario WHERE email=?",
                 new String[]{email});
-        if (cursor.moveToFirst()) {
-            return true;
-        } else
-            return false;
-    }
-
-    public boolean comprobarLogin(String email, String contrasenha) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM usuario WHERE email=? and contrasenha=?",
-                new String[]{email, contrasenha});
         if (cursor.moveToFirst()) {
             return true;
         } else
@@ -175,25 +207,17 @@ public class SqlIO extends SQLiteOpenHelper {
         return nombre;
     }
 
-    public void insertarUsuario(Usuario user) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL("INSERT INTO usuario(email, nombre, contrasenha) VALUES(?,?,?)",
-                    new String[]{user.getEmail(), user.getNombre(), user.getContrasenha()});
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-        return;
-    }
+
+    /**
+     * Queries: FAVORITAS
+     */
 
     public Boolean comprobarFavorita(String email, int idReceta) {
         Cursor cursor = this.getReadableDatabase().rawQuery("SELECT count(*) FROM favoritas where usuario_email=? and receta_idReceta=?",
                 new String[]{email, Integer.toString(idReceta)});
 
         if (cursor.moveToFirst()) {
-            if (cursor.getInt(0) >0) {
+            if (cursor.getInt(0) > 0) {
                 return true;
             } else {
                 return false;
@@ -202,31 +226,4 @@ public class SqlIO extends SQLiteOpenHelper {
             return false;
         }
     }
-
-    public void burnData() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL("DELETE FROM favoritas");
-            db.execSQL("DELETE FROM receta");
-            db.execSQL("DELETE FROM usuario");
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    public void insertarFavorita(String idReceta, String email) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.beginTransaction();
-        try {
-            db.execSQL("INSERT INTO favoritas(receta_idReceta, usuario_email) VALUES(?,?)",
-                    new String[]{idReceta, email});
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-        return;
-    }
-
 }
