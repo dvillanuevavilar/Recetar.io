@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,10 +44,11 @@ public class Main extends Activity {
 
     public void updateStatus() {
         if (estadoConexion()) {
-            try {
-                new DataFetcher(Main.this).execute(new URL("http://recetario.hol.es/selects.php"));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
+            if (currentUser != null) {
+                new DataFetcher(Main.this).execute(currentUser.getEmail());
+            }
+            else{
+                new DataFetcher(Main.this).execute("");
             }
         } else {
             Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
@@ -65,8 +67,8 @@ public class Main extends Activity {
         adapter = new AdaptadorSeccion(this, secciones);
         lista.setAdapter(adapter);
 
+        currentUser = null;
         Main.this.updateStatus();
-
     }
 
     @Override

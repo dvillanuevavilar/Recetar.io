@@ -22,7 +22,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Iterator;
 
-public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
+public class DataFetcher extends AsyncTask<String, Void, Boolean> {
     private Main main;
 
     public DataFetcher(Main mainActivity) {
@@ -30,7 +30,7 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
     }
 
     @Override
-    public Boolean doInBackground(URL... url) {
+    public Boolean doInBackground(String... email) {
         boolean toret = false;
         InputStream in = null;
         JSONObject jsonObject;
@@ -39,7 +39,8 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
         JSONArray jsonArray_favs;
 
         try {
-            HttpURLConnection conn = (HttpURLConnection) url[0].openConnection();
+            URL url = new URL("http://recetario.hol.es/selects.php");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(2500);
             conn.setConnectTimeout(2500);
             conn.setRequestMethod("GET");
@@ -82,10 +83,14 @@ public class DataFetcher extends AsyncTask<URL, Void, Boolean> {
             }
 
             //Insert-favs
-            jsonArray_favs = jsonObject.getJSONArray("favoritas");
-            for (int i = 0; i < jsonArray_favs.length(); i++) {
-                JSONObject obj = jsonArray_favs.getJSONObject(i);
-                mydb.insertarFavorita(obj.getString("receta_idReceta"), obj.getString("usuario_email"));
+            if (!email[0].isEmpty()) {
+                jsonArray_favs = jsonObject.getJSONArray("favoritas");
+                for (int i = 0; i < jsonArray_favs.length(); i++) {
+                    JSONObject obj = jsonArray_favs.getJSONObject(i);
+                    if (obj.getString("usuario_email").equals(email[0])) {
+                        mydb.insertarFavorita(obj.getString("receta_idReceta"), obj.getString("usuario_email"));
+                    }
+                }
             }
 
             toret = true;

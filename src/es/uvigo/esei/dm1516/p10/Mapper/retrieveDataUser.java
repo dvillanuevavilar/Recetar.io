@@ -17,7 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class retrieveDataUser extends AsyncTask<ArrayList<String>, Void, Boolean> {
+public class retrieveDataUser extends AsyncTask<String, Void, Boolean> {
     private Login login;
     private Usuario currentUser;
     private ProgressDialog progressDialog;
@@ -34,7 +34,7 @@ public class retrieveDataUser extends AsyncTask<ArrayList<String>, Void, Boolean
     }
 
     @Override
-    public Boolean doInBackground(ArrayList<String>... userToSearch) {
+    public Boolean doInBackground(String... userToSearch) {
         boolean toret = false;
         InputStream in = null;
         JSONObject jsonObject;
@@ -58,7 +58,7 @@ public class retrieveDataUser extends AsyncTask<ArrayList<String>, Void, Boolean
 
             for (int i = 0; i < jsonArray_users.length() && !toret; i++) {
                 JSONObject obj = jsonArray_users.getJSONObject(i);
-                if (obj.getString("email").equals(userToSearch[0].get(0)) && obj.getString("contrasenha").equals(userToSearch[0].get(1))) {
+                if (obj.getString("email").equals(userToSearch[0]) && obj.getString("contrasenha").equals(userToSearch[1])) {
                     currentUser = new Usuario(obj.getString("email"), obj.getString("nombre"), obj.getString("contrasenha"));
                     toret = true;
                 }

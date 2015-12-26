@@ -33,10 +33,7 @@ public class Login extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<String> userToSearch = new ArrayList<String>(2);
-                userToSearch.add(etCorreo.getText().toString());
-                userToSearch.add(etPass.getText().toString());
-                new retrieveDataUser(Login.this).execute(userToSearch);
+                new retrieveDataUser(Login.this).execute(etCorreo.getText().toString(), etPass.getText().toString());
             }
         });
 
