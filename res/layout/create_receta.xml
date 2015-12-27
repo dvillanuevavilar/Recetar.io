@@ -77,12 +77,11 @@
                 <EditText
                         android:layout_width="340dp"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName|numberDecimal"
                         android:ems="10"
                         android:id="@+id/etTiempo"
                         android:hint="@string/tiempo"
                         android:layout_below="@+id/etDificultad"
-                        android:layout_alignStart="@+id/etDificultad"/>
+                        android:layout_alignStart="@+id/etDificultad" android:inputType="numberDecimal"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -91,12 +90,11 @@
                 <EditText
                         android:layout_width="340dp"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
                         android:ems="10"
                         android:id="@+id/etNumComensales"
                         android:hint="@string/comensales"
                         android:layout_below="@+id/etTiempo"
-                        android:layout_alignStart="@+id/etTiempo" android:maxLength="2"/>
+                        android:layout_alignStart="@+id/etTiempo" android:maxLength="2" android:inputType="number"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"

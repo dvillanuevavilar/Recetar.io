@@ -40,6 +40,7 @@ public class Main extends Activity {
 
     public void setCurrentUser(){
         currentUser=null;
+        this.onPrepareOptionsMenu(menu);
         Toast.makeText(this,"Usuario no válido",Toast.LENGTH_SHORT);
     }
 
@@ -90,6 +91,7 @@ public class Main extends Activity {
             currentUser = new Usuario(data.getExtras().getString("email"), data.getExtras().getString("nombre"), data.getExtras().getString("pass"));
             this.onPrepareOptionsMenu(this.menu);
             Main.this.updateStatus();
+            primerInicio=false;
         }
         if (resultCode == -100) {
             Main.this.updateStatus();
