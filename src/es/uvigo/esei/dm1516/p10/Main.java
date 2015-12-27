@@ -1,5 +1,6 @@
 package es.uvigo.esei.dm1516.p10;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.*;
 import es.uvigo.esei.dm1516.p10.Core.App;
@@ -27,6 +29,7 @@ public class Main extends Activity {
     private AdaptadorSeccion adapter;
     private static Usuario currentUser;
     private boolean mostrarFav = false;
+    private Menu menu;
 
     public static Usuario getCurrentUser() {
         return currentUser;
@@ -76,6 +79,7 @@ public class Main extends Activity {
         // TODO Auto-generated method stub
         if ((resultCode == RESULT_OK) && (requestCode == REQUEST_CODE)) {
             currentUser = new Usuario(data.getExtras().getString("email"), data.getExtras().getString("nombre"), data.getExtras().getString("pass"));
+            this.onPrepareOptionsMenu(this.menu);
         }
         if ((requestCode == REQUEST_CODE) && (resultCode == -100)) {
             Main.this.updateStatus();
@@ -167,6 +171,7 @@ public class Main extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         this.getMenuInflater().inflate(R.menu.main_menu, menu);
+        this.menu=menu;
         return true;
     }
 
@@ -198,6 +203,7 @@ public class Main extends Activity {
                 onStop();
                 onStart();
                 Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show();
+                this.onPrepareOptionsMenu(this.menu);
                 break;
             case R.id.mainMenu2ItemOpt1:
                 //Sincronizar

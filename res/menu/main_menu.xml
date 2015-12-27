@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/grupo1">
-        <item android:id="@+id/mainMenuItemOpt1" android:title="@string/app_sinc"></item>
+        <item android:id="@+id/mainMenuItemOpt1"
+              android:title="@string/app_sinc"
+              android:orderInCategory="2"
+              android:showAsAction="ifRoom"
+              android:icon="@android:drawable/ic_popup_sync">
+        </item>
         <item android:id="@+id/mainMenuItemOpt2" android:title="@string/favoritos"></item>
-        <item android:id="@+id/mainMenuItemOpt3" android:title="@string/crearreceta"></item>
-        <item android:id="@+id/mainMenuItemOpt4" android:title="@string/cerrar_sesion"></item>
+        <item android:id="@+id/mainMenuItemOpt3"
+              android:title="@string/crearreceta"
+              android:orderInCategory="1"
+              android:showAsAction="ifRoom"
+              android:icon="@android:drawable/ic_menu_add">
+        </item>
+        <item android:id="@+id/mainMenuItemOpt4"
+              android:title="@string/cerrar_sesion"
+              android:showAsAction="never">
+        </item>
     </group>
     <group android:id="@+id/grupo2">
-        <item android:id="@+id/mainMenu2ItemOpt1" android:title="@string/app_sinc"></item>
+        <item android:id="@+id/mainMenu2ItemOpt1" android:title="@string/app_sinc"
+              android:orderInCategory="2"
+              android:showAsAction="ifRoom"
+              android:icon="@android:drawable/ic_popup_sync">
+        </item>
         <item android:id="@+id/mainMenu2ItemOpt2" android:title="@string/app_Login"></item>
         <item android:id="@+id/mainMenu2ItemOpt3" android:title="@string/app_Registro"></item>
     </group>
