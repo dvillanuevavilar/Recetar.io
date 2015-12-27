@@ -150,9 +150,8 @@ public class CrearReceta extends Activity {
                         && receta.getIngredientes().length() > 0 && receta.getElaboracion().length() > 0
                         && Integer.toString(receta.getTiempo()).length() > 0 && receta.getTiempo() > 0
                         && Integer.toString(receta.getNumComensales()).length() > 0 && receta.getNumComensales() > 0
-                        && receta.getImagen().length()>0) {
+                        && receta.getImagen().length() > 0) {
 
-                    //((App) getApplication()).getDb().insertarReceta(receta, email);
                     try {
                         new InsertsConnection("receta", receta).execute(new URL("http://recetario.hol.es/insert-receta.php"));
                     } catch (MalformedURLException e) {
@@ -173,11 +172,11 @@ public class CrearReceta extends Activity {
             if (data != null) {
                 ImageView iv = (ImageView) CrearReceta.this.findViewById(R.id.idImgView);
                 iv.setImageBitmap((Bitmap) data.getParcelableExtra("data"));
-                imagen=(Bitmap) data.getParcelableExtra("data");
+                imagen = (Bitmap) data.getParcelableExtra("data");
             }
         } else if (requestCode == SELECT_PICTURE) {
             ImageView iv = (ImageView) CrearReceta.this.findViewById(R.id.idImgView);
-            if(data !=null) {
+            if (data != null) {
                 Uri selectedImage = data.getData();
                 InputStream is;
                 try {
@@ -185,7 +184,7 @@ public class CrearReceta extends Activity {
                     BufferedInputStream bis = new BufferedInputStream(is);
                     Bitmap bitmap = BitmapFactory.decodeStream(bis);
                     iv.setImageBitmap(bitmap);
-                    imagen=bitmap;
+                    imagen = bitmap;
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -194,13 +193,13 @@ public class CrearReceta extends Activity {
     }
 
     public String BitMapToString(Bitmap bitmap) {
-        if(bitmap!=null) {
+        if (bitmap != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
             byte[] b = baos.toByteArray();
             String temp = Base64.encodeToString(b, Base64.DEFAULT);
             return temp;
-        }else{
+        } else {
             return "error de imagen";
         }
     }

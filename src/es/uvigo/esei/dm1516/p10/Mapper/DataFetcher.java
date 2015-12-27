@@ -129,10 +129,10 @@ public class DataFetcher extends AsyncTask<String, Void, Boolean> {
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
         if (aBoolean) {
-            Toast.makeText(main, "Actualizado", Toast.LENGTH_SHORT).show();
+            main.setMensaje("Actualizado");
             main.onStart();
         } else
-            Toast.makeText(main, "Error en actualización", Toast.LENGTH_SHORT).show();
+            main.setMensaje("Error en actualización");
     }
 }
 

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.*;
 import es.uvigo.esei.dm1516.p10.Core.App;
 import es.uvigo.esei.dm1516.p10.Mapper.DataFetcher;
+import es.uvigo.esei.dm1516.p10.Mapper.retrieveDataUser;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
@@ -29,10 +30,17 @@ public class Main extends Activity {
     private AdaptadorSeccion adapter;
     private static Usuario currentUser;
     private boolean mostrarFav = false;
+    private boolean mostrarMen = false;
+    private boolean primerInicio = true;
     private Menu menu;
 
     public static Usuario getCurrentUser() {
         return currentUser;
+    }
+
+    public void setCurrentUser(){
+        currentUser=null;
+        Toast.makeText(this,"Usuario no válido",Toast.LENGTH_SHORT);
     }
 
     public boolean estadoConexion() {
@@ -71,6 +79,7 @@ public class Main extends Activity {
         lista.setAdapter(adapter);
 
         currentUser = null;
+        mostrarMen=true;
         Main.this.updateStatus();
     }
 
@@ -80,8 +89,9 @@ public class Main extends Activity {
         if ((resultCode == RESULT_OK) && (requestCode == REQUEST_CODE)) {
             currentUser = new Usuario(data.getExtras().getString("email"), data.getExtras().getString("nombre"), data.getExtras().getString("pass"));
             this.onPrepareOptionsMenu(this.menu);
+            Main.this.updateStatus();
         }
-        if ((requestCode == REQUEST_CODE) && (resultCode == -100)) {
+        if (resultCode == -100) {
             Main.this.updateStatus();
         }
     }
@@ -147,6 +157,10 @@ public class Main extends Activity {
             String nombre = prefs.getString("nombre", "");
             String contrasenha = prefs.getString("contrasenha", "");
             currentUser = new Usuario(email, nombre, contrasenha);
+            if(primerInicio == true) {
+                new retrieveDataUser(Main.this).execute(currentUser.getEmail(), currentUser.getContrasenha());
+                primerInicio=false;
+            }
         }
     }
 
@@ -180,6 +194,7 @@ public class Main extends Activity {
         switch (menuItem.getItemId()) {
             case R.id.mainMenuItemOpt1:
                 //Sincronizar
+                mostrarMen=true;
                 Main.this.updateStatus();
                 break;
             case R.id.mainMenuItemOpt2:
@@ -207,11 +222,11 @@ public class Main extends Activity {
                 break;
             case R.id.mainMenu2ItemOpt1:
                 //Sincronizar
+                mostrarMen=true;
                 Main.this.updateStatus();
                 break;
             case R.id.mainMenu2ItemOpt2:
                 //Intent de login
-                Main.this.updateStatus();
                 Intent intentLogin2 = new Intent(Main.this, Login.class);
                 Main.this.startActivityForResult(intentLogin2, REQUEST_CODE);
                 break;
@@ -226,6 +241,13 @@ public class Main extends Activity {
                 break;
         }
         return true;
+    }
+
+    public void setMensaje(String mensaje){
+        if(mostrarMen){
+            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+        }
+        mostrarMen=false;
     }
 
 }

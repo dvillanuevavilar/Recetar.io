@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import es.uvigo.esei.dm1516.p10.Login;
+import es.uvigo.esei.dm1516.p10.Main;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 public class retrieveDataUser extends AsyncTask<String, Void, Boolean> {
     private Login login;
+    private Main main;
     private Usuario currentUser;
     private ProgressDialog progressDialog;
 
@@ -27,10 +29,18 @@ public class retrieveDataUser extends AsyncTask<String, Void, Boolean> {
         this.login = activity;
     }
 
+    public retrieveDataUser(Main activity) {
+        this.main = activity;
+    }
+
     @Override
     protected void onPreExecute(){
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(login, "Iniciando sesión...", "Espere por favor.");
+        if(main!=null) {
+            progressDialog = ProgressDialog.show(main, "Iniciando sesión...", "Espere por favor.");
+        }else{
+            progressDialog = ProgressDialog.show(login, "Iniciando sesión...", "Espere por favor.");
+        }
     }
 
     @Override
@@ -99,10 +109,18 @@ public class retrieveDataUser extends AsyncTask<String, Void, Boolean> {
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
         progressDialog.dismiss();
-        if (aBoolean) {
-            login.loginUser(currentUser);
-        } else {
-            login.loginUser(null);
+        if(login!=null) {
+            if (aBoolean) {
+                login.loginUser(currentUser);
+            } else {
+                login.loginUser(null);
+            }
+        }else{
+            if(aBoolean){
+                main.updateStatus();
+            }else{
+                main.setCurrentUser();
+            }
         }
     }
 }
