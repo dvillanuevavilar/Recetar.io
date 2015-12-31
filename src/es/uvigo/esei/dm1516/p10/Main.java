@@ -198,7 +198,7 @@ public class Main extends Activity {
 
         if(resultCode == -150){
             try{
-                Thread.sleep(3000);
+                Thread.sleep(1000);
                 Main.this.updateSQLite(false);
             }catch (Exception e){
                 e.printStackTrace();
@@ -259,7 +259,7 @@ public class Main extends Activity {
 
     public void setCurrentUser(Usuario user) {
         currentUser = user;
-        this.updateSQLite(true);
+        this.updateSQLite(false);
         this.onPrepareOptionsMenu(menu);
     }
 
