@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 import es.uvigo.esei.dm1516.p10.Core.App;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 
@@ -16,7 +15,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
     private final SparseArray<GrupoDeItems> grupos;
     public LayoutInflater inflater;
     public Activity activity;
-    private static final int REQUEST_CODE=1;
+    private static final int REQUEST_CODE = 1;
 
     // Constructor
     public AdaptadorSeccion(Activity act, SparseArray<GrupoDeItems> grupos) {
@@ -62,8 +61,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(activity, "Seleccionado id "+ children.getIdReceta(), Toast.LENGTH_SHORT).show();
-                Intent intentVerReceta = new Intent("intent.action.VIEWRECETA");
+                Intent intentVerReceta = new Intent(activity, VerReceta.class);
                 intentVerReceta.putExtra("idReceta", children.getIdReceta());
                 intentVerReceta.putExtra("titulo", children.getTitulo());
                 intentVerReceta.putExtra("tiempo", String.valueOf(children.getTiempo()));
@@ -72,7 +70,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
                 intentVerReceta.putExtra("autor", nombreAutor);
                 intentVerReceta.putExtra("ingredientes", children.getIngredientes());
                 intentVerReceta.putExtra("elaboracion", children.getElaboracion());
-                activity.startActivityForResult(intentVerReceta,REQUEST_CODE);
+                activity.startActivity(intentVerReceta);
             }
         });
         return convertView;

@@ -7,7 +7,7 @@
               android:showAsAction="ifRoom"
               android:icon="@android:drawable/ic_popup_sync">
         </item>
-        <item android:id="@+id/mainMenuItemOpt2" android:title="@string/favoritos"></item>
+        <item android:id="@+id/mainMenuItemOpt2" android:title="@string/favoritos"/>
         <item android:id="@+id/mainMenuItemOpt3"
               android:title="@string/crearreceta"
               android:orderInCategory="1"
@@ -25,7 +25,7 @@
               android:showAsAction="ifRoom"
               android:icon="@android:drawable/ic_popup_sync">
         </item>
-        <item android:id="@+id/mainMenu2ItemOpt2" android:title="@string/app_Login"></item>
-        <item android:id="@+id/mainMenu2ItemOpt3" android:title="@string/app_Registro"></item>
+        <item android:id="@+id/mainMenu2ItemOpt2" android:title="@string/app_Login"/>
+        <item android:id="@+id/mainMenu2ItemOpt3" android:title="@string/app_Registro"/>
     </group>
 </menu>

@@ -4,6 +4,7 @@
     <string name="HintNombre">Nombre</string>
     <string name="HintCorreo">Correo electronico</string>
     <string name="HintPwd">Contraseña</string>
+    <string name="HintPwd2">Repita la contraseña</string>
     <string name="BtnIniciar">Iniciar sesion</string>
     <string name="BtnRegistrar">Registrar</string>
     <string name="TvRegistro">Registrarse</string>

@@ -40,7 +40,7 @@
                 android:inputType="textPassword"
                 android:ems="10"
                 android:id="@+id/etPwdR2"
-                android:hint="@string/HintPwd" android:layout_below="@+id/etPwdR"
+                android:hint="@string/HintPwd2" android:layout_below="@+id/etPwdR"
                 android:layout_alignLeft="@+id/etCorreoR" android:layout_marginTop="25dp"
                 android:layout_alignEnd="@+id/etCorreoR" android:password="false"/>
         <Button

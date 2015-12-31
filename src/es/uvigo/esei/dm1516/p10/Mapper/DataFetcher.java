@@ -1,5 +1,6 @@
 package es.uvigo.esei.dm1516.p10.Mapper;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -17,16 +18,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.util.Iterator;
 
 public class DataFetcher extends AsyncTask<String, Void, Boolean> {
     private Main main;
+    private ProgressDialog progressDialog;
 
     public DataFetcher(Main mainActivity) {
         this.main = mainActivity;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        progressDialog = ProgressDialog.show(main, "Actualizando...", "Espere por favor.");
     }
 
     @Override
@@ -128,11 +133,12 @@ public class DataFetcher extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
+        progressDialog.dismiss();
         if (aBoolean) {
-            main.setMensaje("Actualizado");
-            main.onStart();
+            Toast.makeText(main, "Actualizado", Toast.LENGTH_SHORT).show();
+            main.updateRecetasList();
         } else
-            main.setMensaje("Error en actualización");
+            Toast.makeText(main, "Error en actualización", Toast.LENGTH_SHORT).show();
     }
 }
 

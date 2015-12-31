@@ -16,8 +16,6 @@ import android.widget.Toast;
 import es.uvigo.esei.dm1516.p10.Mapper.retrieveDataUser;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
-import java.util.ArrayList;
-
 public class Login extends Activity {
 
     public void onCreate(Bundle bundle) {

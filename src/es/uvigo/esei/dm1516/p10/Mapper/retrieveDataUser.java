@@ -16,7 +16,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class retrieveDataUser extends AsyncTask<String, Void, Boolean> {
     private Login login;
@@ -34,11 +33,11 @@ public class retrieveDataUser extends AsyncTask<String, Void, Boolean> {
     }
 
     @Override
-    protected void onPreExecute(){
+    protected void onPreExecute() {
         super.onPreExecute();
-        if(main!=null) {
+        if (main != null) {
             progressDialog = ProgressDialog.show(main, "Iniciando sesión...", "Espere por favor.");
-        }else{
+        } else {
             progressDialog = ProgressDialog.show(login, "Iniciando sesión...", "Espere por favor.");
         }
     }
@@ -109,18 +108,15 @@ public class retrieveDataUser extends AsyncTask<String, Void, Boolean> {
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
         progressDialog.dismiss();
-        if(login!=null) {
+        if (login != null) {
             if (aBoolean) {
                 login.loginUser(currentUser);
             } else {
                 login.loginUser(null);
             }
-        }else{
-            if(aBoolean){
-                main.updateStatus();
-            }else{
-                main.setCurrentUser();
-            }
+        } else {
+            main.setCurrentUser(currentUser);
         }
     }
 }
+

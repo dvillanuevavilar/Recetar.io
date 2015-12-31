@@ -30,6 +30,10 @@ public class GrupoDeItems {
         return children.get(pos);
     }
 
+    public void clear(){
+        children.clear();
+    }
+
     public int size(){
         return children.size();
     }
