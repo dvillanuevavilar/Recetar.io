@@ -1,22 +1,20 @@
 package es.uvigo.esei.dm1516.p10;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.*;
-import es.uvigo.esei.dm1516.p10.Core.App;
 import es.uvigo.esei.dm1516.p10.Mapper.InsertsConnection;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 
@@ -26,10 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Blob;
-import java.util.Calendar;
-
-import static es.uvigo.esei.dm1516.p10.Main.*;
 
 public class CrearReceta extends Activity {
     private static int TAKE_PICTURE = 1;
@@ -38,8 +32,12 @@ public class CrearReceta extends Activity {
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.create_receta);
+
+        ActionBar actBar = this.getActionBar();
+        if (actBar != null) {
+            actBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         Button btGuardar = (Button) this.findViewById(R.id.btGuardar);
         EditText etTitulo = (EditText) this.findViewById(R.id.etTitulo);
@@ -153,12 +151,10 @@ public class CrearReceta extends Activity {
                         && receta.getImagen().length() > 0) {
 
                     try {
-                        new InsertsConnection("receta", receta).execute(new URL("http://recetario.hol.es/insert-receta.php"));
+                        new InsertsConnection("receta", receta, CrearReceta.this).execute(new URL("http://recetario.hol.es/insert-receta.php"));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
-                    CrearReceta.this.setResult(-150);
-                    CrearReceta.this.finish();
                 } else {
                     Toast.makeText(CrearReceta.this, "No puede haber campos vacios", Toast.LENGTH_SHORT).show();
                 }
@@ -202,5 +198,14 @@ public class CrearReceta extends Activity {
         } else {
             return "";
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+        }
+        return true;
     }
 }

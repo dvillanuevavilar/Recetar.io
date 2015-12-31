@@ -27,14 +27,13 @@ public class DataFetcher extends AsyncTask<String, Void, Boolean> {
 
     public DataFetcher(Main mainActivity, boolean mensaje) {
         this.main = mainActivity;
-        this.mensaje=mensaje;
-
+        this.mensaje = mensaje;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if(mensaje) {
+        if (mensaje) {
             progressDialog = ProgressDialog.show(main, "Actualizando...", "Espere por favor.");
         }
     }
@@ -138,18 +137,17 @@ public class DataFetcher extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
-        if(mensaje){
+        if (mensaje) {
             progressDialog.dismiss();
         }
         if (aBoolean) {
-            if(mensaje) {
+            if (mensaje) {
                 Toast.makeText(main, "Actualizado", Toast.LENGTH_SHORT).show();
             }
             main.updateRecetasList();
-        } else
-            if(mensaje) {
-                Toast.makeText(main, "Error en actualización", Toast.LENGTH_SHORT).show();
-            }
+        } else if (mensaje) {
+            Toast.makeText(main, "Error en actualización", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

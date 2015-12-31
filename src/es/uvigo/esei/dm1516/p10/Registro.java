@@ -59,7 +59,6 @@ public class Registro extends Activity {
                         Usuario usuario = new Usuario(etCorreo.getText().toString(), etNombre.getText().toString(), etPass.getText().toString());
                         if (Registro.this.registrarUsuario(usuario)) {
                             Toast.makeText(getApplicationContext(), "Usuario registrado correctamente", Toast.LENGTH_SHORT).show();
-                            Registro.this.setResult(-100);
                             Registro.this.finish();
                         } else {
                             Toast.makeText(getApplicationContext(), "Ya existe un usuario con ese email", Toast.LENGTH_SHORT).show();

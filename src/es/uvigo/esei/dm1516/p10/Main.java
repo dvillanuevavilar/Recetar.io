@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 public class Main extends Activity {
     private static final int REQUEST_CODE = 1;
+    private static final int REFRESH_SQL = -100;
     private SparseArray<GrupoDeItems> secciones;
     private GrupoDeItems primeros, segundos, postres;
     private AdaptadorSeccion adapter;
@@ -48,7 +49,7 @@ public class Main extends Activity {
         secciones.append(2, postres);
 
         currentUser = null;
-        Main.this.updateSQLite(true);
+        Main.this.updateSQLite(false);
     }
 
     @Override
@@ -158,6 +159,7 @@ public class Main extends Activity {
                 onStart();
                 Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show();
                 this.onPrepareOptionsMenu(this.menu);
+                this.updateRecetasList();
                 break;
 
             //Sincronizar
@@ -175,7 +177,7 @@ public class Main extends Activity {
             case R.id.mainMenu2ItemOpt3:
                 if (estadoConexion()) {
                     Intent intentRegistro = new Intent(Main.this, Registro.class);
-                    Main.this.startActivityForResult(intentRegistro, REQUEST_CODE);
+                    Main.this.startActivity(intentRegistro);
                 } else {
                     Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
                 }
@@ -192,18 +194,11 @@ public class Main extends Activity {
             primerInicio = false;
         }
 
-        if((resultCode == -100) && (requestCode == REQUEST_CODE)){
-            Main.this.updateSQLite(false);
+        if ((resultCode == REFRESH_SQL) && (requestCode == REQUEST_CODE)) {
+            updateSQLite(false);
         }
 
-        if(resultCode == -150){
-            try{
-                Thread.sleep(1000);
-                Main.this.updateSQLite(false);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
+
     }
 
     public boolean estadoConexion() {
@@ -216,8 +211,8 @@ public class Main extends Activity {
         }
     }
 
-    private void updateSQLite(boolean mensaje) {
-        if (estadoConexion()) {
+    public void updateSQLite(boolean mensaje) {
+        if (Main.this.estadoConexion()) {
             if (currentUser != null) {
                 new DataFetcher(Main.this, mensaje).execute(currentUser.getEmail());
             } else {

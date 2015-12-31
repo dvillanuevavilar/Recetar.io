@@ -1,7 +1,11 @@
 package es.uvigo.esei.dm1516.p10.Mapper;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+import es.uvigo.esei.dm1516.p10.CrearReceta;
+import es.uvigo.esei.dm1516.p10.Main;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
@@ -13,6 +17,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import static es.uvigo.esei.dm1516.p10.Main.*;
+
 public class InsertsConnection extends AsyncTask<URL, Void, Void> {
 
     private String tipoInsercion;
@@ -20,6 +26,8 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
     private Receta receta;
     private String email;
     private int idReceta;
+    private CrearReceta crearReceta;
+    private ProgressDialog progressDialog;
 
     //Constructor para insertar usuario
     public InsertsConnection(String tipoInsercion, Usuario user) {
@@ -28,9 +36,10 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
     }
 
     //Constructor para insertar receta
-    public InsertsConnection(String tipoInsercion, Receta receta) {
+    public InsertsConnection(String tipoInsercion, Receta receta, CrearReceta crearReceta) {
         this.tipoInsercion = tipoInsercion;
         this.receta = receta;
+        this.crearReceta = crearReceta;
     }
 
     //Constructor para insertar o borrar favorita
@@ -42,7 +51,10 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
 
     @Override
     public void onPreExecute() {
-
+        super.onPreExecute();
+        if (tipoInsercion == "receta") {
+            progressDialog = ProgressDialog.show(crearReceta, "Guardando receta...", "Espere por favor.");
+        }
     }
 
     @Override
@@ -58,15 +70,15 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
                 data = "titulo=" + URLEncoder.encode(receta.getTitulo(), "utf-8") +
                         "&tiempo=" + URLEncoder.encode(Integer.toString(receta.getTiempo()), "utf-8") +
                         "&dificultad=" + URLEncoder.encode(receta.getDificultad(), "utf-8") +
-                        "&imagen=" +URLEncoder.encode("sdf", "utf-8") +
-                        "&numComensales=" +URLEncoder.encode(Integer.toString(receta.getNumComensales()), "utf-8") +
-                        "&ingredientes="+ URLEncoder.encode(receta.getIngredientes(), "utf-8") +
-                        "&elaboracion=" +URLEncoder.encode(receta.getElaboracion(), "utf-8") +
+                        "&imagen=" + URLEncoder.encode("sdf", "utf-8") +
+                        "&numComensales=" + URLEncoder.encode(Integer.toString(receta.getNumComensales()), "utf-8") +
+                        "&ingredientes=" + URLEncoder.encode(receta.getIngredientes(), "utf-8") +
+                        "&elaboracion=" + URLEncoder.encode(receta.getElaboracion(), "utf-8") +
                         "&seccion=" + URLEncoder.encode(receta.getSeccion(), "utf-8") +
                         "&fecha=" + URLEncoder.encode("0000-00-00", "utf-8") +
                         "&usuario_email=" + URLEncoder.encode(receta.getAutor(), "utf-8") +
-                        "&imagen=" + URLEncoder.encode(receta.getImagen(),"utf-8");
-            } else if(tipoInsercion == "favorita"){
+                        "&imagen=" + URLEncoder.encode(receta.getImagen(), "utf-8");
+            } else if (tipoInsercion == "favorita") {
                 data = "receta_idReceta=" + URLEncoder.encode(Integer.toString(idReceta), "utf-8") +
                         "&usuario_email=" + URLEncoder.encode(email, "utf-8");
             }
@@ -87,18 +99,27 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
             out.flush();
             out.close();
 
+
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (con != null)
                 con.disconnect();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
         return null;
     }
 
     @Override
     public void onPostExecute(Void result) {
-
+        if (tipoInsercion == "receta") {
+            progressDialog.dismiss();
+            crearReceta.setResult(-100);
+            crearReceta.finish();
+        }
     }
 }

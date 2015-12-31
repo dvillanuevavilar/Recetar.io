@@ -30,7 +30,8 @@
         </activity>
         <activity
             android:name=".CrearReceta"
-            android:label="@string/app_CrearReceta">
+            android:label="@string/app_CrearReceta"
+            android:parentActivityName=".Main">
         </activity>
         <activity
             android:name=".VerReceta"
