@@ -70,7 +70,7 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
                 intentVerReceta.putExtra("autor", nombreAutor);
                 intentVerReceta.putExtra("ingredientes", children.getIngredientes());
                 intentVerReceta.putExtra("elaboracion", children.getElaboracion());
-                activity.startActivity(intentVerReceta);
+                activity.startActivityForResult(intentVerReceta, REQUEST_CODE);
             }
         });
         return convertView;

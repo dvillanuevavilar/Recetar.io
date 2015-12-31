@@ -48,7 +48,7 @@ public class Main extends Activity {
         secciones.append(2, postres);
 
         currentUser = null;
-        Main.this.updateSQLite();
+        Main.this.updateSQLite(true);
     }
 
     @Override
@@ -131,7 +131,7 @@ public class Main extends Activity {
         switch (menuItem.getItemId()) {
             //Sincronizar
             case R.id.mainMenuItemOpt1:
-                Main.this.updateSQLite();
+                Main.this.updateSQLite(true);
                 break;
 
             //Favoritos
@@ -162,7 +162,7 @@ public class Main extends Activity {
 
             //Sincronizar
             case R.id.mainMenu2ItemOpt1:
-                Main.this.updateSQLite();
+                Main.this.updateSQLite(true);
                 break;
 
             //Login
@@ -191,6 +191,19 @@ public class Main extends Activity {
             setCurrentUser(new Usuario(data.getExtras().getString("email"), data.getExtras().getString("nombre"), data.getExtras().getString("pass")));
             primerInicio = false;
         }
+
+        if((resultCode == -100) && (requestCode == REQUEST_CODE)){
+            Main.this.updateSQLite(false);
+        }
+
+        if(resultCode == -150){
+            try{
+                Thread.sleep(3000);
+                Main.this.updateSQLite(false);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean estadoConexion() {
@@ -203,12 +216,12 @@ public class Main extends Activity {
         }
     }
 
-    private void updateSQLite() {
+    private void updateSQLite(boolean mensaje) {
         if (estadoConexion()) {
             if (currentUser != null) {
-                new DataFetcher(Main.this).execute(currentUser.getEmail());
+                new DataFetcher(Main.this, mensaje).execute(currentUser.getEmail());
             } else {
-                new DataFetcher(Main.this).execute("");
+                new DataFetcher(Main.this, mensaje).execute("");
             }
         } else {
             Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
@@ -246,7 +259,7 @@ public class Main extends Activity {
 
     public void setCurrentUser(Usuario user) {
         currentUser = user;
-        this.updateSQLite();
+        this.updateSQLite(true);
         this.onPrepareOptionsMenu(menu);
     }
 

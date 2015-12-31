@@ -23,15 +23,20 @@ import java.net.URL;
 public class DataFetcher extends AsyncTask<String, Void, Boolean> {
     private Main main;
     private ProgressDialog progressDialog;
+    private boolean mensaje;
 
-    public DataFetcher(Main mainActivity) {
+    public DataFetcher(Main mainActivity, boolean mensaje) {
         this.main = mainActivity;
+        this.mensaje=mensaje;
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(main, "Actualizando...", "Espere por favor.");
+        if(mensaje) {
+            progressDialog = ProgressDialog.show(main, "Actualizando...", "Espere por favor.");
+        }
     }
 
     @Override
@@ -133,12 +138,18 @@ public class DataFetcher extends AsyncTask<String, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
-        progressDialog.dismiss();
+        if(mensaje){
+            progressDialog.dismiss();
+        }
         if (aBoolean) {
-            Toast.makeText(main, "Actualizado", Toast.LENGTH_SHORT).show();
+            if(mensaje) {
+                Toast.makeText(main, "Actualizado", Toast.LENGTH_SHORT).show();
+            }
             main.updateRecetasList();
         } else
-            Toast.makeText(main, "Error en actualización", Toast.LENGTH_SHORT).show();
+            if(mensaje) {
+                Toast.makeText(main, "Error en actualización", Toast.LENGTH_SHORT).show();
+            }
     }
 }
 

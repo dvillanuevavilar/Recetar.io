@@ -157,7 +157,7 @@ public class CrearReceta extends Activity {
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
-                    CrearReceta.this.setResult(-100);
+                    CrearReceta.this.setResult(-150);
                     CrearReceta.this.finish();
                 } else {
                     Toast.makeText(CrearReceta.this, "No puede haber campos vacios", Toast.LENGTH_SHORT).show();
@@ -200,7 +200,7 @@ public class CrearReceta extends Activity {
             String temp = Base64.encodeToString(b, Base64.DEFAULT);
             return temp;
         } else {
-            return "error de imagen";
+            return "";
         }
     }
 }

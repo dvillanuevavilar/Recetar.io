@@ -18,6 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class VerReceta extends Activity {
+
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.view_receta);
@@ -76,6 +77,7 @@ public class VerReceta extends Activity {
                     if (networkInfo != null && networkInfo.isConnected()) {
                         try {
                             new InsertsConnection("favorita", emailActual, idReceta).execute(new URL("http://recetario.hol.es/insert-fav.php"));
+                            VerReceta.this.setResult(-100);
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
                         }
@@ -89,6 +91,7 @@ public class VerReceta extends Activity {
                 }
             }
         });
+
     }
 
     public Bitmap StringToBitMap(String encodedString) {
