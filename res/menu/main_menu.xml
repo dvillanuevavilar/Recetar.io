@@ -18,6 +18,7 @@
               android:title="@string/cerrar_sesion"
               android:showAsAction="never">
         </item>
+        <item android:id="@+id/mainMenuItemOpt5" android:title="@string/about"/>
     </group>
     <group android:id="@+id/grupo2">
         <item android:id="@+id/mainMenu2ItemOpt1" android:title="@string/app_sinc"
@@ -27,5 +28,6 @@
         </item>
         <item android:id="@+id/mainMenu2ItemOpt2" android:title="@string/app_Login"/>
         <item android:id="@+id/mainMenu2ItemOpt3" android:title="@string/app_Registro"/>
+        <item android:id="@+id/mainMenu2ItemOpt4" android:title="@string/about"/>
     </group>
 </menu>

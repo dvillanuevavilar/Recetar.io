@@ -38,5 +38,10 @@
             android:label="@string/app_VerReceta"
             android:parentActivityName=".Main">
         </activity>
+        <activity
+                android:name=".About"
+                android:label="@string/about"
+                android:parentActivityName=".Main">
+        </activity>
     </application>
 </manifest>

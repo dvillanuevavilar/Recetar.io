@@ -182,6 +182,17 @@ public class Main extends Activity {
                     Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
                 }
                 break;
+
+            //About
+            case R.id.mainMenuItemOpt5:
+                Main.this.startActivity(new Intent(Main.this, About.class));
+                break;
+
+            //About
+            case R.id.mainMenu2ItemOpt4:
+                Main.this.startActivity(new Intent(Main.this, About.class));
+                break;
+
         }
         return true;
     }

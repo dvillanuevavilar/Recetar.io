@@ -31,4 +31,5 @@
     <string name="selImg">Imagen</string>
     <string name="camara">Cámara</string>
     <string name="galeria">Galería</string>
+    <string name="about">Acerca de</string>
 </resources>
