@@ -49,7 +49,11 @@ public class Main extends Activity {
         secciones.append(2, postres);
 
         currentUser = null;
-        Main.this.updateSQLite(false);
+        if (Main.this.estadoConexion()) {
+            Main.this.updateSQLite(false);
+        } else {
+            Main.this.updateRecetasList();
+        }
     }
 
     @Override
@@ -65,7 +69,11 @@ public class Main extends Activity {
             String contrasenha = prefs.getString("contrasenha", "");
             Usuario userToLogin = new Usuario(email, nombre, contrasenha);
             if (primerInicio == true) {
-                new retrieveDataUser(Main.this).execute(userToLogin.getEmail(), userToLogin.getContrasenha());
+                if (estadoConexion()) {
+                    new retrieveDataUser(Main.this).execute(userToLogin.getEmail(), userToLogin.getContrasenha());
+                } else {
+                    Toast.makeText(this, "No ha sido posible loguearse", Toast.LENGTH_SHORT).show();
+                }
                 primerInicio = false;
             }
         }
@@ -169,8 +177,12 @@ public class Main extends Activity {
 
             //Login
             case R.id.mainMenu2ItemOpt2:
-                Intent intentLogin2 = new Intent(Main.this, Login.class);
-                Main.this.startActivityForResult(intentLogin2, REQUEST_CODE);
+                if (estadoConexion()) {
+                    Intent intentLogin2 = new Intent(Main.this, Login.class);
+                    Main.this.startActivityForResult(intentLogin2, REQUEST_CODE);
+                } else {
+                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             //Registro
@@ -185,12 +197,20 @@ public class Main extends Activity {
 
             //About
             case R.id.mainMenuItemOpt5:
-                Main.this.startActivity(new Intent(Main.this, About.class));
+                if (estadoConexion()) {
+                    Main.this.startActivity(new Intent(Main.this, About.class));
+                } else {
+                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             //About
             case R.id.mainMenu2ItemOpt4:
-                Main.this.startActivity(new Intent(Main.this, About.class));
+                if (estadoConexion()) {
+                    Main.this.startActivity(new Intent(Main.this, About.class));
+                } else {
+                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
         }
