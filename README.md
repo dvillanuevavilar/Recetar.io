@@ -1,2 +1,4 @@
 # Recetar.io
-Android application proyect for Dispositivos Móviles
+Android application project for Dispositivos Móviles.
+Universidad de Vigo.
+2015 - 2016
