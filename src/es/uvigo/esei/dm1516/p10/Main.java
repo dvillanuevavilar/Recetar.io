@@ -177,7 +177,7 @@ public class Main extends Activity {
             case R.id.mainMenu2ItemOpt3:
                 if (estadoConexion()) {
                     Intent intentRegistro = new Intent(Main.this, Registro.class);
-                    Main.this.startActivity(intentRegistro);
+                    Main.this.startActivityForResult(intentRegistro,REQUEST_CODE);
                 } else {
                     Toast.makeText(this, R.string.needConnection, Toast.LENGTH_SHORT).show();
                 }
