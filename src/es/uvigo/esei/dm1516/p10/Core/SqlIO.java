@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
-import java.sql.Blob;
 import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 public class SqlIO extends SQLiteOpenHelper {
     public static String DATABASE_NAME = "recetario_db";
@@ -18,18 +16,6 @@ public class SqlIO extends SQLiteOpenHelper {
     public SqlIO(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
-    /*@Override
-    public void onOpen(SQLiteDatabase db) {
-        db.beginTransaction();
-        try {
-            db.execSQL("DELETE FROM favoritas WHERE usuario IS NULL OR receta IS NULL");
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-        return;
-    }*/
 
     @Override
     public void onCreate(SQLiteDatabase db) {

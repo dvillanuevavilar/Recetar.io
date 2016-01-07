@@ -17,7 +17,6 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
     public Activity activity;
     private static final int REQUEST_CODE = 1;
 
-    // Constructor
     public AdaptadorSeccion(Activity act, SparseArray<GrupoDeItems> grupos) {
         activity = act;
         this.grupos = grupos;
@@ -76,51 +75,41 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         return convertView;
     }
 
-    // Nos devuelve los datos asociados a un subitem en base
-    // a la posici�n
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return grupos.get(groupPosition).get(childPosition);
     }
 
-    // Devuelve el id de un item o subitem en base a la
-    // posici�n de item y subitem
     @Override
     public long getChildId(int groupPosition, int childPosition) {
         return 0;
     }
 
-    // Nos devuelve la cantidad de subitems que tiene un �tem
     @Override
     public int getChildrenCount(int groupPosition) {
         return grupos.get(groupPosition).size();
     }
 
-    //Los datos de un �tem especificado por groupPosition
     @Override
     public Object getGroup(int groupPosition) {
         return grupos.get(groupPosition);
     }
 
-    //La cantidad de �tem que tenemos definidos
     @Override
     public int getGroupCount() {
         return grupos.size();
     }
 
-    //M�todo que se invoca al contraer un �tem
     @Override
     public void onGroupCollapsed(int groupPosition) {
         super.onGroupCollapsed(groupPosition);
     }
 
-    //M�todo que se invoca al expandir un �tem
     @Override
     public void onGroupExpanded(int groupPosition) {
         super.onGroupExpanded(groupPosition);
     }
 
-    //Devuelve el id de un �tem
     @Override
     public long getGroupId(int groupPosition) {
         return 0;
@@ -131,7 +120,6 @@ public class AdaptadorSeccion extends BaseExpandableListAdapter {
         return false;
     }
 
-    //Nos informa si es seleccionable o no un �tem o subitem
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;

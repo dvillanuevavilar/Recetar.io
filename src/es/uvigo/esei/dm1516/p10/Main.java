@@ -22,7 +22,6 @@ import java.util.ArrayList;
 public class Main extends Activity {
     private static final int REQUEST_CODE = 1;
     private static final int REFRESH_SQL = -100;
-    private SparseArray<GrupoDeItems> secciones;
     private GrupoDeItems primeros, segundos, postres;
     private AdaptadorSeccion adapter;
     private static Usuario currentUser;
@@ -37,7 +36,7 @@ public class Main extends Activity {
 
         ExpandableListView lista = (ExpandableListView) this.findViewById(R.id.listViewexp);
 
-        secciones = new SparseArray<GrupoDeItems>();
+        SparseArray<GrupoDeItems> secciones = new SparseArray<GrupoDeItems>();
         adapter = new AdaptadorSeccion(this, secciones);
         lista.setAdapter(adapter);
 
@@ -63,30 +62,20 @@ public class Main extends Activity {
         //Cargamos usuario si existe
         SharedPreferences prefs = this.getPreferences(Context.MODE_PRIVATE);
         Boolean estado = prefs.getBoolean("estado", false);
-        if (estado == true) {
+        if (estado) {
             String email = prefs.getString("email", "");
             String nombre = prefs.getString("nombre", "");
             String contrasenha = prefs.getString("contrasenha", "");
             Usuario userToLogin = new Usuario(email, nombre, contrasenha);
-            if (primerInicio == true) {
+            if (primerInicio) {
                 if (estadoConexion()) {
                     new retrieveDataUser(Main.this).execute(userToLogin.getEmail(), userToLogin.getContrasenha());
                 } else {
-                    Toast.makeText(this, "No ha sido posible loguearse", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.noposiblelogin, Toast.LENGTH_SHORT).show();
                 }
                 primerInicio = false;
             }
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override
@@ -112,7 +101,6 @@ public class Main extends Activity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        //menu.clear();
         if (currentUser != null) {
             menu.setGroupEnabled(R.id.grupo2, false);
             menu.setGroupVisible(R.id.grupo2, false);
@@ -155,7 +143,7 @@ public class Main extends Activity {
                     Intent intentCrearReceta = new Intent(Main.this, CrearReceta.class);
                     Main.this.startActivityForResult(intentCrearReceta, REQUEST_CODE);
                 } else {
-                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.needConnection, Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -165,7 +153,7 @@ public class Main extends Activity {
                 mostrarFav = false;
                 onStop();
                 onStart();
-                Toast.makeText(this, "Desconectado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.desconected, Toast.LENGTH_SHORT).show();
                 this.onPrepareOptionsMenu(this.menu);
                 this.updateRecetasList();
                 break;
@@ -181,7 +169,7 @@ public class Main extends Activity {
                     Intent intentLogin2 = new Intent(Main.this, Login.class);
                     Main.this.startActivityForResult(intentLogin2, REQUEST_CODE);
                 } else {
-                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.needConnection, Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -191,7 +179,7 @@ public class Main extends Activity {
                     Intent intentRegistro = new Intent(Main.this, Registro.class);
                     Main.this.startActivity(intentRegistro);
                 } else {
-                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.needConnection, Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -200,7 +188,7 @@ public class Main extends Activity {
                 if (estadoConexion()) {
                     Main.this.startActivity(new Intent(Main.this, About.class));
                 } else {
-                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.needConnection, Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -209,7 +197,7 @@ public class Main extends Activity {
                 if (estadoConexion()) {
                     Main.this.startActivity(new Intent(Main.this, About.class));
                 } else {
-                    Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.needConnection, Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -228,8 +216,6 @@ public class Main extends Activity {
         if ((resultCode == REFRESH_SQL) && (requestCode == REQUEST_CODE)) {
             updateSQLite(false);
         }
-
-
     }
 
     public boolean estadoConexion() {
@@ -250,7 +236,7 @@ public class Main extends Activity {
                 new DataFetcher(Main.this, mensaje).execute("");
             }
         } else {
-            Toast.makeText(this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.needConnection, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -258,22 +244,26 @@ public class Main extends Activity {
         ArrayList<Receta> recetas;
         if (mostrarFav) {
             recetas = ((App) this.getApplication()).getDb().listarRecetasFavoritas(currentUser.getEmail());
-            Main.this.setTitle("Favoritas");
+            Main.this.setTitle(R.string.favoritas);
         } else {
             recetas = ((App) this.getApplication()).getDb().listarRecetas();
-            Main.this.setTitle("Recetas");
+            Main.this.setTitle(R.string.recetas);
         }
 
         primeros.clear();
         segundos.clear();
         postres.clear();
         for (Receta r : recetas) {
-            if (r.getSeccion().equals("Primer plato")) {
-                primeros.add(r);
-            } else if (r.getSeccion().equals("Segundo plato")) {
-                segundos.add(r);
-            } else {
-                postres.add(r);
+            switch (r.getSeccion()) {
+                case "Primer plato":
+                    primeros.add(r);
+                    break;
+                case "Segundo plato":
+                    segundos.add(r);
+                    break;
+                default:
+                    postres.add(r);
+                    break;
             }
         }
         adapter.notifyDataSetChanged();

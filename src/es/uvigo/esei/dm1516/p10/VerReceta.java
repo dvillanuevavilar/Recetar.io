@@ -48,7 +48,6 @@ public class VerReceta extends Activity {
         int idReceta = (int) this.getIntent().getExtras().get("idReceta");
         String imagen = ((App) getApplication()).getDb().imagenPorReceta(idReceta);
 
-
         if (Main.getCurrentUser() != null) {
             if (((App) getApplication()).getDb().comprobarFavorita(Main.getCurrentUser().getEmail(), idReceta)) {
                 btnFav.setChecked(true);
@@ -82,11 +81,11 @@ public class VerReceta extends Activity {
                             e.printStackTrace();
                         }
                     } else {
-                        Toast.makeText(VerReceta.this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(VerReceta.this, R.string.needConnection, Toast.LENGTH_SHORT).show();
                         btnFav.setChecked(false);
                     }
                 } else {
-                    Toast.makeText(VerReceta.this, "Necesitas estar logueado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VerReceta.this, R.string.needLogin, Toast.LENGTH_SHORT).show();
                     btnFav.setChecked(false);
                 }
             }
@@ -113,5 +112,4 @@ public class VerReceta extends Activity {
         }
         return true;
     }
-
 }

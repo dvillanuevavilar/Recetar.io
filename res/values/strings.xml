@@ -13,6 +13,8 @@
     <string name="app_CrearReceta">Nueva receta</string>
     <string name="app_VerReceta">Receta</string>
     <string name="favoritos">Ver favoritas/todas</string>
+    <string name="favoritas">Favoritas</string>
+    <string name="recetas">Recetas</string>
     <string name="cerrar_sesion">Cerrar sesión</string>
     <string name="min">min</string>
     <string name="ingredientes">Ingredientes</string>
@@ -32,4 +34,20 @@
     <string name="camara">Cámara</string>
     <string name="galeria">Galería</string>
     <string name="about">Acerca de</string>
+    <string name="noposiblelogin">No ha sido posible loguearse</string>
+    <string name="needConnection">Necesitas conexión a internet</string>
+    <string name="desconected">Desconectado</string>
+    <string name="lenghtPass">La contraseña debe tener una longitud superior a 4 caracteres</string>
+    <string name="incorrectEmail">El campo email no es correcto</string>
+    <string name="fieldNotEmpty">El campo nombre no puede estar vacío</string>
+    <string name="registerCorrect">Usuario registrado correctamente</string>
+    <string name="userExists">Ya existe un usuario con ese email</string>
+    <string name="passNotEquals">Las contraseñas no coinciden</string>
+    <string name="needLogin">Necesitas estar logueado</string>
+    <string name="fieldsNotEmpty">No puede haber campos vacios</string>
+    <string name="selectSection">Selecciona una sección</string>
+    <string name="acept">Aceptar</string>
+    <string name="selectDificultad">Selecciona un nivel de dificultad</string>
+    <string name="loginCorrect">Logueado correctamente</string>
+    <string name="loginIncorrect">Usuario no válido</string>
 </resources>

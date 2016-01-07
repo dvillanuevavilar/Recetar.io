@@ -17,7 +17,6 @@ import es.uvigo.esei.dm1516.p10.Mapper.retrieveDataUser;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
 public class Login extends Activity {
-
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -44,7 +43,7 @@ public class Login extends Activity {
                     Intent intentRegistro = new Intent(Login.this, Registro.class);
                     Login.this.startActivity(intentRegistro);
                 } else {
-                    Toast.makeText(Login.this, "Necesitas conexión a internet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this, R.string.needConnection, Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
@@ -58,10 +57,10 @@ public class Login extends Activity {
             data.putExtra("nombre", currentUser.getNombre());
             data.putExtra("pass", currentUser.getContrasenha());
             setResult(RESULT_OK, data);
-            Toast.makeText(getApplicationContext(), "Logueado correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.loginCorrect, Toast.LENGTH_SHORT).show();
             Login.this.finish();
         } else {
-            Toast.makeText(getApplicationContext(), "Usuario no v\u00e1lido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.loginIncorrect, Toast.LENGTH_SHORT).show();
         }
     }
 }

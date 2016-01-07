@@ -13,7 +13,6 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.*;
 import es.uvigo.esei.dm1516.p10.Mapper.InsertsConnection;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
@@ -54,7 +53,7 @@ public class CrearReceta extends Activity {
             public void onClick(View v) {
                 final CharSequence[] secciones = {"Primer plato", "Segundo plato", "Postre"};
                 AlertDialog.Builder dialogSeccion = new AlertDialog.Builder(CrearReceta.this);
-                dialogSeccion.setTitle("Selecciona una sección");
+                dialogSeccion.setTitle(R.string.selectSection);
                 dialogSeccion.setSingleChoiceItems(secciones, -1, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         switch (item) {
@@ -70,7 +69,7 @@ public class CrearReceta extends Activity {
                         }
                     }
                 });
-                dialogSeccion.setPositiveButton("Aceptar", null);
+                dialogSeccion.setPositiveButton(R.string.acept, null);
                 dialogSeccion.create().show();
             }
         });
@@ -81,7 +80,7 @@ public class CrearReceta extends Activity {
             public void onClick(View v) {
                 final CharSequence[] dificulades = {" Fácil ", " Medio ", " Dificil "};
                 AlertDialog.Builder dialogDificultad = new AlertDialog.Builder(CrearReceta.this);
-                dialogDificultad.setTitle("Selecciona un nivel de dificultad");
+                dialogDificultad.setTitle(R.string.selectDificultad);
                 dialogDificultad.setSingleChoiceItems(dificulades, -1, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int item) {
                         switch (item) {
@@ -97,13 +96,12 @@ public class CrearReceta extends Activity {
                         }
                     }
                 });
-                dialogDificultad.setPositiveButton("Aceptar", null);
+                dialogDificultad.setPositiveButton(R.string.acept, null);
                 dialogDificultad.create().show();
             }
         });
 
-        //Imagen
-
+        /* Obtener imagen */
         Button btnGal = (Button) CrearReceta.this.findViewById(R.id.idImgGal);
         Button btnCam = (Button) CrearReceta.this.findViewById(R.id.idImgCam);
 
@@ -156,7 +154,7 @@ public class CrearReceta extends Activity {
                         e.printStackTrace();
                     }
                 } else {
-                    Toast.makeText(CrearReceta.this, "No puede haber campos vacios", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrearReceta.this, R.string.fieldsNotEmpty, Toast.LENGTH_SHORT).show();
                 }
             }
         });

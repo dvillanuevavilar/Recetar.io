@@ -7,7 +7,6 @@ import java.util.List;
 
 public class GrupoDeItems {
     private String nombreGrupo;
-    private int countRecetas;
     private final List<Receta> children = new ArrayList<Receta>();
 
     public GrupoDeItems(String nombreGrupo) {

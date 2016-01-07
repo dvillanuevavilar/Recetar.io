@@ -1,23 +1,17 @@
 package es.uvigo.esei.dm1516.p10.Mapper;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 import es.uvigo.esei.dm1516.p10.CrearReceta;
-import es.uvigo.esei.dm1516.p10.Main;
 import es.uvigo.esei.dm1516.p10.Model.Receta;
 import es.uvigo.esei.dm1516.p10.Model.Usuario;
 
 import java.io.BufferedOutputStream;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-
-import static es.uvigo.esei.dm1516.p10.Main.*;
 
 public class InsertsConnection extends AsyncTask<URL, Void, Void> {
 
@@ -98,8 +92,6 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
             out.write(data.getBytes());
             out.flush();
             out.close();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -111,6 +103,7 @@ public class InsertsConnection extends AsyncTask<URL, Void, Void> {
                 e.printStackTrace();
             }
         }
+
         return null;
     }
 

@@ -23,7 +23,6 @@ public class retrieveDataUser extends AsyncTask<String, Void, Boolean> {
     private Usuario currentUser;
     private ProgressDialog progressDialog;
 
-
     public retrieveDataUser(Login activity) {
         this.login = activity;
     }
